@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<WidgetData name="Trim metal">
+    <BackgroundData color="-1" scale="3">
+        <AbsRadiusData radious="0">
+            <AbsOutlineData alpha="255" color="-16777216" width="0.0">
+                <AbsWidthHeightData height="426.0" width="360.0">
+                    <AbsShadowData color="-16777216" dx="0.0" dy="0.0" radious="0.0">
+                        <AbsObjectData alpha="0" anchorType="4" left="0.0" rotate="0.0" top="0.0" />
+                    </AbsShadowData>
+                </AbsWidthHeightData>
+            </AbsOutlineData>
+        </AbsRadiusData>
+    </BackgroundData>
+    <ImageData reverseLR="1" reverseUD="1">
+        <XMLBitmapUtil>file:2.png</XMLBitmapUtil>
+        <AbsOutlineData alpha="255" color="-16777216" width="0.0">
+            <AbsWidthHeightData height="426.0" width="360.0">
+                <AbsShadowData color="-16777216" dx="0.0" dy="0.0" radious="0.0">
+                    <AbsObjectData alpha="255" anchorType="4" left="180.0" rotate="0.0"
+                        top="213.0" />
+                </AbsShadowData>
+            </AbsWidthHeightData>
+        </AbsOutlineData>
+    </ImageData>
+    <ImageData reverseLR="1" reverseUD="1">
+        <XMLBitmapUtil>file:3.png</XMLBitmapUtil>
+        <AbsOutlineData alpha="255" color="-16777216" width="0.0">
+            <AbsWidthHeightData height="426.0" width="360.0">
+                <AbsShadowData color="-16777216" dx="0.0" dy="0.0" radious="0.0">
+                    <AbsObjectData alpha="255" anchorType="4" left="180.0" rotate="0.0"
+                        top="213.0" />
+                </AbsShadowData>
+            </AbsWidthHeightData>
+        </AbsOutlineData>
+    </ImageData>
+    <TextData align="LEFT">BATT(%)
+        <AbsFontData caseType="0" color="-3211242" font="RobotoCondensed-Bold">
+            <AbsSizeData size="12.0">
+                <AbsShadowData color="-16777216" dx="0.0" dy="0.0" radious="0.0">
+                    <AbsObjectData alpha="255" anchorType="4" left="182.0" rotate="0.0"
+                        top="323.0" />
+                </AbsShadowData>
+            </AbsSizeData>
+        </AbsFontData>
+    </TextData>
+    <ImageData reverseLR="1" reverseUD="1">
+        <XMLBitmapUtil>file:4.png</XMLBitmapUtil>
+        <AbsOutlineData alpha="255" color="-16777216" width="0.0">
+            <AbsWidthHeightData height="426.0" width="360.0">
+                <AbsShadowData color="-16777216" dx="0.0" dy="0.0" radious="0.0">
+                    <AbsObjectData alpha="255" anchorType="4" left="180.0" rotate="0.0"
+                        top="213.0" />
+                </AbsShadowData>
+            </AbsWidthHeightData>
+        </AbsOutlineData>
+    </ImageData>
+</WidgetData>
