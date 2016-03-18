@@ -18,10 +18,6 @@ public class AbsWidthHeightData extends AbsShadowData implements EditableWidthHe
     private float height = 72.0F;
     private float width = 72.0F;
 
-    public void deleteResource() {
-        super.deleteResource();
-    }
-
     public float getHeight() {
         return height;
     }
@@ -62,6 +58,10 @@ public class AbsWidthHeightData extends AbsShadowData implements EditableWidthHe
             anchorOffsetInvalidate = true;
             matrixInvalidate = true;
         }
+    }
+
+    public void deleteResource() {
+        super.deleteResource();
     }
 
     public void putToXmlSerializer(ConfigFileData data)

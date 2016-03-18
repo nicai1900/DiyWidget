@@ -36,7 +36,7 @@ public class XMLBitmapUtil {
 
     public static Bitmap StringToBitMap(String s) {
         try {
-            return ByteArrayToBitmap(Base64.decode(s, 0));
+            return ByteArrayToBitmap(Base64.decode(s, Base64.DEFAULT));
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);
         }

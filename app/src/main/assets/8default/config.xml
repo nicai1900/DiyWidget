@@ -1,11 +1,12 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <WidgetData name="Trim metal">
-    <BackgroundData color="-1" scale="3">
-        <AbsRadiusData radious="0">
-            <AbsOutlineData alpha="255" color="-16777216" width="0.0">
+    <BackgroundData color="-16777216" scale="3">
+        <AbsRadiusData radious="30">
+            <AbsOutlineData alpha="255" color="-16777216" width="2.0">
                 <AbsWidthHeightData height="426.0" width="360.0">
-                    <AbsShadowData color="-16777216" dx="0.0" dy="0.0" radious="0.0">
-                        <AbsObjectData alpha="0" anchorType="4" left="0.0" rotate="0.0" top="0.0" />
+                    <AbsShadowData color="-7829368" dx="2.0" dy="2.0" radious="2.0">
+                        <AbsObjectData alpha="255" anchorType="4" left="0.0" rotate="0.0"
+                            top="0.0" />
                     </AbsShadowData>
                 </AbsWidthHeightData>
             </AbsOutlineData>

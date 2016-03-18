@@ -38,7 +38,7 @@ public class WidgetData {
     private List<AbsObjectData> objects = new ArrayList<>();
 
     public WidgetData() {
-        initDefaultData(400, 400);
+        this(WIDGET_DEFAULT_SIZE, WIDGET_DEFAULT_SIZE);
     }
 
     public WidgetData(int width, int height) {
@@ -52,14 +52,28 @@ public class WidgetData {
         setBackground(backgroundData);
     }
 
-    public void deleteResource() {
-        name = null;
-        if (objects != null) {
-            while (objects.size() > 0) {
-                removeData(objects.get(0));
-            }
-            objects = null;
-        }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setHeight(float height) {
+        background.setHeight(height);
+    }
+
+    public float getHeight() {
+        return background.getHeight();
+    }
+
+    public void setWidth(float width) {
+        background.setWidth(width);
+    }
+
+    public float getWidth() {
+        return background.getWidth();
     }
 
     public void setBackground(BackgroundData data) {
@@ -99,30 +113,6 @@ public class WidgetData {
 
     public AbsObjectData getFocusData() {
         return focusData;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setHeight(float height) {
-        background.setHeight(height);
-    }
-
-    public float getHeight() {
-        return background.getHeight();
-    }
-
-    public void setWidth(float width) {
-        background.setWidth(width);
-    }
-
-    public float getWidth() {
-        return background.getWidth();
     }
 
     public void addData(AbsObjectData object) {
@@ -186,6 +176,16 @@ public class WidgetData {
             return true;
         }
         return false;
+    }
+
+    public void deleteResource() {
+        name = null;
+        if (objects != null) {
+            while (objects.size() > 0) {
+                removeData(objects.get(0));
+            }
+            objects = null;
+        }
     }
 
     public Bitmap createPreViewBitmap() {

@@ -29,63 +29,37 @@ public class TextData extends AbsFontData {
         setName(ResourceUtil.getString(R.string.text));
     }
 
-    public void deleteResource() {
-        super.deleteResource();
-        this.align = null;
-        this.text = null;
-    }
-
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-        canvas.setMatrix(getMatrix());
-        canvas.drawText(convertStringToCaseType(text), 0.0F, 0.0F, getPaint());
-    }
-
-    public Paint.Align getAlign() {
-        return align;
-    }
-
     public float getMaxSize() {
         return MAX_SIZE;
-    }
-
-    public String getName() {
-        return super.getName();
     }
 
     public String getText() {
         return text;
     }
 
-    public boolean hitTest(int x, int y) {
-        float[] touchPoint = new float[2];
-        touchPoint[0] = x;
-        touchPoint[1] = y;
-        Matrix matrix = new Matrix();
-        getMatrix().invert(matrix);
-        matrix.mapPoints(touchPoint);
-        return getBounds().contains((int) touchPoint[0], (int) touchPoint[1]);
-    }
-
-    protected void initBounds() {
-        super.initBounds();
-        if (boundsInvalidate) {
-            boundsInvalidate = false;
-            String str = convertStringToCaseType(text);
-            getPaint().getTextBounds(str, 0, str.length(), bounds);
+    public void setText(String text) {
+        if (!this.text.equals(text)) {
+            this.text = text;
+            this.boundsInvalidate = true;
+            this.anchorOffsetInvalidate = true;
+            this.matrixInvalidate = true;
         }
     }
 
-    protected void initMatrix() {
-        super.initMatrix();
-        if (this.matrixInvalidate) {
-            this.matrixInvalidate = false;
-            this.matrix.reset();
-            PointF anchorOffset = getAnchorOffset();
-            this.matrix.preTranslate(getLeft(), getTop());
-            this.matrix.preRotate(getRotate());
-            this.matrix.preTranslate(-anchorOffset.x, -anchorOffset.y);
+    public Paint.Align getAlign() {
+        return align;
+    }
+
+    public void setAlign(Paint.Align paramAlign) {
+        if (this.align != paramAlign) {
+            this.align = paramAlign;
+            this.paintInvalidate = true;
+            this.boundsInvalidate = true;
         }
+    }
+
+    public String getName() {
+        return super.getName();
     }
 
     protected void initPaint() {
@@ -103,21 +77,47 @@ public class TextData extends AbsFontData {
         }
     }
 
-    public void setAlign(Paint.Align paramAlign) {
-        if (this.align != paramAlign) {
-            this.align = paramAlign;
-            this.paintInvalidate = true;
-            this.boundsInvalidate = true;
+    protected void initMatrix() {
+        super.initMatrix();
+        if (this.matrixInvalidate) {
+            this.matrixInvalidate = false;
+            this.matrix.reset();
+            PointF anchorOffset = getAnchorOffset();
+            this.matrix.preTranslate(getLeft(), getTop());
+            this.matrix.preRotate(getRotate());
+            this.matrix.preTranslate(-anchorOffset.x, -anchorOffset.y);
         }
     }
 
-    public void setText(String text) {
-        if (!this.text.equals(text)) {
-            this.text = text;
-            this.boundsInvalidate = true;
-            this.anchorOffsetInvalidate = true;
-            this.matrixInvalidate = true;
+    protected void initBounds() {
+        super.initBounds();
+        if (boundsInvalidate) {
+            boundsInvalidate = false;
+            String drawString = convertStringToCaseType(text);
+            getPaint().getTextBounds(drawString, 0, drawString.length(), bounds);
         }
+    }
+
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        canvas.setMatrix(getMatrix());
+        String drawString = convertStringToCaseType(text);
+        canvas.drawText(drawString, 0.0F, 0.0F, getPaint());
+    }
+
+
+    public boolean hitTest(int x, int y) {
+        float[] pts = {(float) x, (float) y};
+        Matrix invertMatrix = new Matrix();
+        getMatrix().invert(invertMatrix);
+        invertMatrix.mapPoints(pts);
+        return getBounds().contains((int) pts[0], (int) pts[1]);
+    }
+
+    public void deleteResource() {
+        super.deleteResource();
+        this.align = null;
+        this.text = null;
     }
 
     public void putToXmlSerializer(ConfigFileData data) throws Exception {

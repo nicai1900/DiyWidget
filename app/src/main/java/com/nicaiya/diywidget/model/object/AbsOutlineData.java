@@ -24,9 +24,15 @@ public class AbsOutlineData extends AbsWidthHeightData implements EditableOutlin
     protected Paint outlinePaint = new Paint();
     protected boolean outlinePaintInvalidate = true;
 
-    public void deleteResource() {
-        super.deleteResource();
-        outlinePaint = null;
+    public void setOutlineColor(int color) {
+        if (outlineColor != color) {
+            outlineColor = color;
+            outlinePaintInvalidate = true;
+        }
+    }
+
+    public int getOutlineColor() {
+        return outlineColor;
     }
 
     public void setOutLineAlpha(int alpha) {
@@ -49,17 +55,6 @@ public class AbsOutlineData extends AbsWidthHeightData implements EditableOutlin
 
     public float getOutLineWidth() {
         return outlineWidth;
-    }
-
-    public void setOutlineColor(int color) {
-        if (outlineColor != color) {
-            outlineColor = color;
-            outlinePaintInvalidate = true;
-        }
-    }
-
-    public int getOutlineColor() {
-        return outlineColor;
     }
 
     public Paint getOutlinePaint() {
@@ -97,6 +92,11 @@ public class AbsOutlineData extends AbsWidthHeightData implements EditableOutlin
         serializer.attribute(ConfigFileData.XML_NAMESPACE, XMLConst.ATTRIBUTE_ALPHA, String.valueOf(outlineAlpha));
         super.putToXmlSerializer(data);
         serializer.endTag(ConfigFileData.XML_NAMESPACE, TAG);
+    }
+
+    public void deleteResource() {
+        super.deleteResource();
+        outlinePaint = null;
     }
 
     public void updateFromXmlPullParser(ConfigFileData data) {

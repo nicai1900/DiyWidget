@@ -16,10 +16,6 @@ public class AbsRadiusData extends AbsOutlineData implements EditableRadius {
 
     private int radius = 0;
 
-    public void deleteResource() {
-        super.deleteResource();
-    }
-
     public void setRadius(int radius) {
         if (this.radius != radius) {
             this.radius = radius;
@@ -28,6 +24,10 @@ public class AbsRadiusData extends AbsOutlineData implements EditableRadius {
 
     public int getRadius() {
         return this.radius;
+    }
+
+    public void deleteResource() {
+        super.deleteResource();
     }
 
     public void putToXmlSerializer(ConfigFileData data) throws Exception {

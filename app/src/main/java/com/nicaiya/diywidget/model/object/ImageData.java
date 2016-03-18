@@ -3,6 +3,7 @@ package com.nicaiya.diywidget.model.object;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
@@ -35,40 +36,14 @@ public class ImageData extends AbsOutlineData {
         setName(ResourceUtil.getString(R.string.image));
     }
 
-    public void deleteResource() {
-        super.deleteResource();
-        if (bitmap != null) {
-            bitmap.recycle();
-            bitmap = null;
-        }
-        srcRect = null;
-        dstRect = null;
+    public void setReverseLR(int reverseLR) {
+        this.reverseLR = reverseLR;
+        this.matrixInvalidate = true;
     }
 
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-        this.canvas = canvas;
-        this.dstRect.right = ((int) getWidth());
-        this.dstRect.bottom = ((int) getHeight());
-        canvas.setMatrix(getMatrix());
-        if ((this.bitmap != null) && (!this.bitmap.isRecycled())) {
-            canvas.drawBitmap(this.bitmap, this.srcRect, this.dstRect, getPaint());
-        }
-        if (isEnableOutline()) {
-            canvas.drawRect(this.dstRect, getOutlinePaint());
-        }
-    }
-
-    public Bitmap getBitmap() {
-        return this.bitmap;
-    }
-
-    public float getMaxHeight() {
-        return MAX_HEIGHT;
-    }
-
-    public float getMaxWidth() {
-        return MAX_WIDTH;
+    public void setReverseUD(int reverseUD) {
+        this.reverseUD = reverseUD;
+        this.matrixInvalidate = true;
     }
 
     public int getReverseLR() {
@@ -79,14 +54,36 @@ public class ImageData extends AbsOutlineData {
         return this.reverseUD;
     }
 
-    public boolean hitTest(int x, int y) {
-        float[] point = new float[2];
-        point[0] = x;
-        point[1] = y;
-        Matrix matrix = new Matrix();
-        getMatrix().invert(matrix);
-        matrix.mapPoints(point);
-        return getBounds().contains((int) point[0], (int) point[1]);
+    public float getMaxHeight() {
+        return MAX_HEIGHT;
+    }
+
+    public float getMaxWidth() {
+        return MAX_WIDTH;
+    }
+
+    public Bitmap getBitmap() {
+        return this.bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        if (this.bitmap != bitmap) {
+            this.bitmap = bitmap;
+            if (this.bitmap != null) {
+                this.srcRect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
+            }
+        }
+    }
+
+    protected void initPaint() {
+        super.initPaint();
+        if (this.paintInvalidate) {
+            this.paintInvalidate = false;
+            this.paint.reset();
+            this.paint.setFlags(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG | Paint.DITHER_FLAG);
+            this.paint.setAlpha(getAlpha());
+            this.paint.setShadowLayer(getShadowRadius(), getShadowDx(), getShadowDy(), getShadowColor());
+        }
     }
 
     protected void initBounds() {
@@ -103,39 +100,41 @@ public class ImageData extends AbsOutlineData {
             this.matrixInvalidate = false;
             this.matrix.reset();
             if (this.canvas != null) {
-                this.matrix.setScale(getReverseLR(), getReverseUD(), this.canvas.getWidth() / 2, this.canvas.getHeight() / 2);
+                this.matrix.setScale(getReverseLR(), getReverseUD(), canvas.getWidth() / 2, canvas.getHeight() / 2);
             }
         }
     }
 
-    protected void initPaint() {
-        super.initPaint();
-        if (this.paintInvalidate) {
-            this.paintInvalidate = false;
-            this.paint.reset();
-            this.paint.setFlags(7);
-            this.paint.setAlpha(getAlpha());
-            this.paint.setShadowLayer(getShadowRadius(), getShadowDx(), getShadowDy(), getShadowColor());
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        this.canvas = canvas;
+        this.dstRect.right = ((int) getWidth());
+        this.dstRect.bottom = ((int) getHeight());
+        canvas.setMatrix(getMatrix());
+        if ((this.bitmap != null) && (!this.bitmap.isRecycled())) {
+            canvas.drawBitmap(this.bitmap, this.srcRect, this.dstRect, getPaint());
+        }
+        if (isEnableOutline()) {
+            canvas.drawRect(this.dstRect, getOutlinePaint());
         }
     }
 
-    public void setBitmap(Bitmap bitmap) {
-        if (this.bitmap != bitmap) {
-            this.bitmap = bitmap;
-            if (this.bitmap != null) {
-                this.srcRect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
-            }
+    public boolean hitTest(int x, int y) {
+        float[] pts = {(float) x, (float) y};
+        Matrix invertMatrix = new Matrix();
+        getMatrix().invert(invertMatrix);
+        invertMatrix.mapPoints(pts);
+        return getBounds().contains((int) pts[0], (int) pts[1]);
+    }
+
+    public void deleteResource() {
+        super.deleteResource();
+        if (bitmap != null) {
+            bitmap.recycle();
+            bitmap = null;
         }
-    }
-
-    public void setReverseLR(int reverseLR) {
-        this.reverseLR = reverseLR;
-        this.matrixInvalidate = true;
-    }
-
-    public void setReverseUD(int reverseUD) {
-        this.reverseUD = reverseUD;
-        this.matrixInvalidate = true;
+        srcRect = null;
+        dstRect = null;
     }
 
     public void putToXmlSerializer(ConfigFileData data) throws Exception {

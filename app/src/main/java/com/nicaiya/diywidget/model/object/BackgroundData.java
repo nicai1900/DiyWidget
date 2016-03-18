@@ -3,6 +3,7 @@ package com.nicaiya.diywidget.model.object;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
@@ -37,40 +38,12 @@ public class BackgroundData extends AbsRadiusData implements EditableFillStyle {
     public static final int SCALE_MATRIX = 8;
 
     private Bitmap bitmap = null;
-    private int color = -1;
+    private int color = Color.WHITE;
     private int scale = SCALE_FIT_CENTER;
 
     public BackgroundData() {
         setName(ResourceUtil.getString(R.string.background));
         setAlpha(127);
-    }
-
-    public void deleteResource() {
-        super.deleteResource();
-        if (bitmap != null) {
-            bitmap.recycle();
-            bitmap = null;
-        }
-    }
-
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-        float f1 = getWidth();
-        float f2 = getHeight();
-        float f3 = Math.min(f1, f2) * getRadius() / 200.0F;
-        canvas.setMatrix(getMatrix());
-        canvas.drawRoundRect(new RectF(0.0F, 0.0F, f1, f2), f3, f3, getPaint());
-        if (isEnableOutline()) {
-            canvas.drawRoundRect(new RectF(0.0F, 0.0F, f1, f2), f3, f3, getOutlinePaint());
-        }
-    }
-
-    public Bitmap getBitmap() {
-        return bitmap;
-    }
-
-    public int getColor() {
-        return color;
     }
 
     public float getMaxHeight() {
@@ -81,12 +54,57 @@ public class BackgroundData extends AbsRadiusData implements EditableFillStyle {
         return MAX_WIDTH;
     }
 
+    public void setBitmap(Bitmap bitmap) {
+        if (this.bitmap != bitmap) {
+            this.bitmap = bitmap;
+            paintInvalidate = true;
+        }
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        if (this.color != color) {
+            this.color = color;
+            paintInvalidate = true;
+        }
+    }
+
+    public void setScale(int scale) {
+        this.scale = scale;
+    }
+
     public int getScale() {
         return scale;
     }
 
-    public boolean hitTest(int x, int y) {
-        return (x > 0) && (x < getWidth()) && (y > 0) && (y < getHeight());
+    public void setLeft(float left) {
+    }
+
+    public void setTop(float top) {
+    }
+
+    protected void initPaint() {
+        super.initPaint();
+        if (paintInvalidate) {
+            paintInvalidate = false;
+            paint.reset();
+            if (bitmap == null) {
+                paint.setColor(color);
+            } else {
+                paint.setFlags(Paint.FILTER_BITMAP_FLAG);
+                paint.setShader(new BitmapShader(bitmap, Shader.TileMode.MIRROR, Shader.TileMode.MIRROR));
+            }
+            paint.setAntiAlias(true);
+            paint.setAlpha(getAlpha());
+        }
     }
 
     protected void initBounds() {
@@ -111,43 +129,30 @@ public class BackgroundData extends AbsRadiusData implements EditableFillStyle {
         }
     }
 
-    protected void initPaint() {
-        super.initPaint();
-        if (paintInvalidate) {
-            paintInvalidate = false;
-            paint.reset();
-            paint.setColor(color);
-            paint.setAntiAlias(true);
-            paint.setAlpha(getAlpha());
-            if (bitmap != null) {
-                paint.setFlags(Paint.FILTER_BITMAP_FLAG);
-                paint.setShader(new BitmapShader(bitmap, Shader.TileMode.MIRROR, Shader.TileMode.MIRROR));
-            }
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        float left = 0;
+        float top = 0;
+        float width = getWidth();
+        float height = getHeight();
+        float rx = Math.min(width, height) * getRadius() / 200.0F;
+        canvas.setMatrix(getMatrix());
+        canvas.drawRoundRect(new RectF(left, top, width, height), rx, rx, getPaint());
+        if (isEnableOutline()) {
+            canvas.drawRoundRect(new RectF(left, top, width, height), rx, rx, getOutlinePaint());
         }
     }
 
-    public void setBitmap(Bitmap bitmap) {
-        if (this.bitmap != bitmap) {
-            this.bitmap = bitmap;
-            paintInvalidate = true;
+    public boolean hitTest(int x, int y) {
+        return (x > 0) && (x < getWidth()) && (y > 0) && (y < getHeight());
+    }
+
+    public void deleteResource() {
+        super.deleteResource();
+        if (bitmap != null) {
+            bitmap.recycle();
+            bitmap = null;
         }
-    }
-
-    public void setColor(int color) {
-        if (this.color != color) {
-            this.color = color;
-            paintInvalidate = true;
-        }
-    }
-
-    public void setLeft(float left) {
-    }
-
-    public void setTop(float top) {
-    }
-
-    public void setScale(int scale) {
-        this.scale = scale;
     }
 
     public void putToXmlSerializer(ConfigFileData data) throws Exception {

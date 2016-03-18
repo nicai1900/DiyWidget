@@ -22,30 +22,6 @@ public class AbsFontData extends AbsSizeData implements EditableFont {
     private int fontColor = Color.BLACK;
     private int stringCaseType = 0;
 
-    public void deleteResource() {
-        super.deleteResource();
-        font = null;
-    }
-
-    protected String convertStringToCaseType(String str) {
-        if (str == null) {
-            return null;
-        }
-        switch (stringCaseType) {
-            case STRING_CASE_TYPE_FIRST_UPPER:
-                char[] chars = str.toLowerCase().toCharArray();
-                chars[0] = Character.toUpperCase(chars[0]);
-                return String.valueOf(chars);
-            case STRING_CASE_TYPE_LOWER:
-                return str.toLowerCase();
-            case STRING_CASE_TYPE_UPPER:
-                return str.toUpperCase();
-            case STRING_CASE_TYPE_NONE:
-            default:
-                return str;
-        }
-    }
-
     public void setFont(FontItem item) {
         if (font != item) {
             font = item;
@@ -60,17 +36,6 @@ public class AbsFontData extends AbsSizeData implements EditableFont {
         return font;
     }
 
-    public void setFontColor(int color) {
-        if (fontColor != color) {
-            fontColor = color;
-            paintInvalidate = true;
-        }
-    }
-
-    public int getFontColor() {
-        return fontColor;
-    }
-
     public void setStringCaseType(int type) {
         if (stringCaseType != type) {
             stringCaseType = type;
@@ -83,6 +48,22 @@ public class AbsFontData extends AbsSizeData implements EditableFont {
 
     public int getStringCaseType() {
         return stringCaseType;
+    }
+
+    public void setFontColor(int color) {
+        if (fontColor != color) {
+            fontColor = color;
+            paintInvalidate = true;
+        }
+    }
+
+    public int getFontColor() {
+        return fontColor;
+    }
+
+    public void deleteResource() {
+        super.deleteResource();
+        font = null;
     }
 
     public void putToXmlSerializer(ConfigFileData data) throws Exception {
@@ -138,6 +119,25 @@ public class AbsFontData extends AbsSizeData implements EditableFont {
             }
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);
+        }
+    }
+
+    protected String convertStringToCaseType(String str) {
+        if (str == null) {
+            return null;
+        }
+        switch (stringCaseType) {
+            case STRING_CASE_TYPE_FIRST_UPPER:
+                char[] chars = str.toLowerCase().toCharArray();
+                chars[0] = Character.toUpperCase(chars[0]);
+                return String.valueOf(chars);
+            case STRING_CASE_TYPE_LOWER:
+                return str.toLowerCase();
+            case STRING_CASE_TYPE_UPPER:
+                return str.toUpperCase();
+            case STRING_CASE_TYPE_NONE:
+            default:
+                return str;
         }
     }
 

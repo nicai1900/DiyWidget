@@ -32,42 +32,197 @@ public class AbsObjectData {
     public static final int ANCHOR_TYPE_B = 7;
     public static final int ANCHOR_TYPE_RB = 8;
 
-    protected Paint paint = new Paint();
-    protected boolean boundsInvalidate = true;
+    protected PointF anchorOffset = new PointF();
     protected boolean anchorOffsetInvalidate = true;
-    protected boolean paintInvalidate = true;
+    private static Paint anchorPaint;
+    private int anchorType = ANCHOR_TYPE_C;
+
+    protected Rect bounds = new Rect();
+    protected boolean boundsInvalidate = true;
+
+    private static Paint focusPaint;
+    private boolean isFocus = false;
+
+    protected Matrix matrix = new Matrix();
     protected boolean matrixInvalidate = true;
 
-    protected PointF anchorOffset = new PointF();
-    protected Rect bounds = new Rect();
-    protected Matrix matrix = new Matrix();
+    protected Paint paint = new Paint();
+    protected boolean paintInvalidate = true;
 
-    private static Paint anchorPaint;
-    private static Paint focusPaint;
-
-    private int anchorType = ANCHOR_TYPE_C;
-    private int alpha = 255;
     private float rotate = 0.0F;
     private float left = 0.0F;
     private float top = 0.0F;
-    private boolean isFocus = false;
+
     private String name = "";
+    private int alpha = 255;
+
+    public void setLeft(float left) {
+        if (this.left != left) {
+            this.left = left;
+            matrixInvalidate = true;
+        }
+    }
+
+    public float getLeft() {
+        return left;
+    }
+
+    public void setTop(float top) {
+        if (this.top != top) {
+            this.top = top;
+            matrixInvalidate = true;
+        }
+    }
+
+    public float getTop() {
+        return top;
+    }
+
+
+    public void setRotate(float rotate) {
+        if (rotate < 0) {
+            rotate += 360.0f;
+        }
+        if (this.rotate != rotate) {
+            this.rotate = rotate;
+            matrixInvalidate = true;
+        }
+    }
+
+    public float getRotate() {
+        return rotate;
+    }
+
+
+    public void setAlpha(int alpha) {
+        if (this.alpha != alpha) {
+            this.alpha = alpha;
+            paintInvalidate = true;
+        }
+    }
+
+    public int getAlpha() {
+        return alpha;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setAnchorType(int anchorType) {
+        if (this.anchorType != anchorType) {
+            float[] points = {0.0F, 0.0F};
+            getMatrix().mapPoints(points);
+            this.anchorType = anchorType;
+            float[] points2 = {0.0F, 0.0F};
+            getMatrix().mapPoints(points2);
+            setLeft(getLeft() - (points2[0] - points[0]));
+            setTop(getTop() - (points2[1] - points[1]));
+
+            anchorOffsetInvalidate = true;
+            matrixInvalidate = true;
+        }
+    }
+
+    public int getAnchorType() {
+        return anchorType;
+    }
+
+    public void setFocus(boolean focus) {
+        isFocus = focus;
+    }
+
+    public boolean isFocus() {
+        return isFocus;
+    }
+
+    public PointF getAnchorOffset() {
+        if (anchorOffsetInvalidate) {
+            initAnchorOffset();
+        }
+        return anchorOffset;
+    }
+
+    protected void initAnchorOffset() {
+        if (anchorOffsetInvalidate) {
+            anchorOffsetInvalidate = false;
+            Rect bounds = getBounds();
+            switch (anchorType) {
+                case ANCHOR_TYPE_LT:
+                    anchorOffset.x = bounds.left;
+                    anchorOffset.y = bounds.top;
+                    break;
+                case ANCHOR_TYPE_T:
+                    anchorOffset.x = bounds.centerX();
+                    anchorOffset.y = bounds.top;
+                    break;
+                case ANCHOR_TYPE_RT:
+                    anchorOffset.x = bounds.right;
+                    anchorOffset.y = bounds.top;
+                    break;
+                case ANCHOR_TYPE_L:
+                    anchorOffset.x = bounds.left;
+                    anchorOffset.y = bounds.centerY();
+                    break;
+                case ANCHOR_TYPE_C:
+                    anchorOffset.x = bounds.centerX();
+                    anchorOffset.y = bounds.centerY();
+                    break;
+                case ANCHOR_TYPE_R:
+                    anchorOffset.x = bounds.right;
+                    anchorOffset.y = bounds.centerY();
+                    break;
+                case ANCHOR_TYPE_LB:
+                    anchorOffset.x = bounds.left;
+                    anchorOffset.y = bounds.bottom;
+                    break;
+                case ANCHOR_TYPE_B:
+                    anchorOffset.x = bounds.centerX();
+                    anchorOffset.y = bounds.bottom;
+                    break;
+                case ANCHOR_TYPE_RB:
+                    anchorOffset.x = bounds.right;
+                    anchorOffset.y = bounds.bottom;
+                    break;
+                default:
+                    throw new IllegalStateException("Error Anchor Type drawAnchor()");
+            }
+        }
+    }
 
     protected void initBounds() {
+    }
+
+    public Rect getBounds() {
+        if (boundsInvalidate) {
+            initBounds();
+        }
+        return bounds;
     }
 
     protected void initMatrix() {
     }
 
+    public Matrix getMatrix() {
+        if (matrixInvalidate) {
+            initMatrix();
+        }
+        return matrix;
+    }
+
+
     protected void initPaint() {
     }
 
-    public void deleteResource() {
-        name = null;
-        paint = null;
-        matrix = null;
-        bounds = null;
-        anchorOffset = null;
+    public Paint getPaint() {
+        if (paintInvalidate) {
+            initPaint();
+        }
+        return paint;
     }
 
     public void draw(Canvas canvas) {
@@ -118,162 +273,12 @@ public class AbsObjectData {
         canvas.drawLine(bounds.right - lineLength, -1 + bounds.bottom, bounds.right, -1 + bounds.bottom, focusPaint);
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setAnchorType(int anchorType) {
-        if (this.anchorType != anchorType) {
-            float[] points = {0.0F, 0.0F};
-            getMatrix().mapPoints(points);
-            this.anchorType = anchorType;
-            float[] points2 = {0.0F, 0.0F};
-            getMatrix().mapPoints(points2);
-            setLeft(getLeft() - (points2[0] - points[0]));
-            setTop(getTop() - (points2[1] - points[1]));
-
-            anchorOffsetInvalidate = true;
-            matrixInvalidate = true;
-        }
-    }
-
-    public int getAnchorType() {
-        return anchorType;
-    }
-
-    public void setAlpha(int alpha) {
-        if (this.alpha != alpha) {
-            this.alpha = alpha;
-            paintInvalidate = true;
-        }
-    }
-
-    public int getAlpha() {
-        return alpha;
-    }
-
-    public void setRotate(float rotate) {
-        float f = rotate % 360.0F;
-        if (f < 0.0F) {
-            f += 360.0F;
-        }
-        if (this.rotate != f) {
-            this.rotate = f;
-            matrixInvalidate = true;
-        }
-    }
-
-    public float getRotate() {
-        return rotate;
-    }
-
-    public void setLeft(float left) {
-        if (this.left != left) {
-            this.left = left;
-            matrixInvalidate = true;
-        }
-    }
-
-    public float getLeft() {
-        return left;
-    }
-
-    public void setTop(float top) {
-        if (this.top != top) {
-            this.top = top;
-            matrixInvalidate = true;
-        }
-    }
-
-    public float getTop() {
-        return top;
-    }
-
-    public void setFocus(boolean focus) {
-        isFocus = focus;
-    }
-
-    public boolean isFocus() {
-        return isFocus;
-    }
-
-    public PointF getAnchorOffset() {
-        if (anchorOffsetInvalidate) {
-            initAnchorOffset();
-        }
-        return anchorOffset;
-    }
-
-    public Rect getBounds() {
-        if (boundsInvalidate) {
-            initBounds();
-        }
-        return bounds;
-    }
-
-    public Matrix getMatrix() {
-        if (matrixInvalidate) {
-            initMatrix();
-        }
-        return matrix;
-    }
-
-    public Paint getPaint() {
-        if (paintInvalidate) {
-            initPaint();
-        }
-        return paint;
-    }
-
-    protected void initAnchorOffset() {
-        if (anchorOffsetInvalidate) {
-            anchorOffsetInvalidate = false;
-            Rect bounds = getBounds();
-            switch (anchorType) {
-                case ANCHOR_TYPE_LT:
-                    anchorOffset.x = bounds.left;
-                    anchorOffset.y = bounds.top;
-                    break;
-                case ANCHOR_TYPE_T:
-                    anchorOffset.x = bounds.centerX();
-                    anchorOffset.y = bounds.top;
-                    break;
-                case ANCHOR_TYPE_RT:
-                    anchorOffset.x = bounds.right;
-                    anchorOffset.y = bounds.top;
-                    break;
-                case ANCHOR_TYPE_L:
-                    anchorOffset.x = bounds.left;
-                    anchorOffset.y = bounds.centerY();
-                    break;
-                case ANCHOR_TYPE_C:
-                    anchorOffset.x = bounds.centerX();
-                    anchorOffset.y = bounds.centerY();
-                    break;
-                case ANCHOR_TYPE_R:
-                    anchorOffset.x = bounds.right;
-                    anchorOffset.y = bounds.centerY();
-                    break;
-                case ANCHOR_TYPE_LB:
-                    anchorOffset.x = bounds.left;
-                    anchorOffset.y = bounds.bottom;
-                    break;
-                case ANCHOR_TYPE_B:
-                    anchorOffset.x = bounds.centerX();
-                    anchorOffset.y = bounds.bottom;
-                    break;
-                case ANCHOR_TYPE_RB:
-                    anchorOffset.x = bounds.right;
-                    anchorOffset.y = bounds.bottom;
-                    break;
-                default:
-                    throw new IllegalStateException("Error Anchor Type drawAnchor()");
-            }
-        }
+    public void deleteResource() {
+        name = null;
+        paint = null;
+        matrix = null;
+        bounds = null;
+        anchorOffset = null;
     }
 
     public boolean hitTest(int x, int y) {

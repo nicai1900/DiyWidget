@@ -15,10 +15,6 @@ public class AbsSizeData extends AbsShadowData implements EditableSize {
 
     private float size = 50.0F;
 
-    public void deleteResource() {
-        super.deleteResource();
-    }
-
     public float getMaxSize() {
         return 1.0F;
     }
@@ -39,6 +35,10 @@ public class AbsSizeData extends AbsShadowData implements EditableSize {
 
     public float getSize() {
         return this.size;
+    }
+
+    public void deleteResource() {
+        super.deleteResource();
     }
 
     public void putToXmlSerializer(ConfigFileData data) throws Exception {

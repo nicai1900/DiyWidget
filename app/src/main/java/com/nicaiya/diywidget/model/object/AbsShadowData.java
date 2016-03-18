@@ -26,10 +26,6 @@ public class AbsShadowData extends AbsObjectData implements EditableShadow {
     private float shadowDy;
     private float shadowRadius;
 
-    public void deleteResource() {
-        super.deleteResource();
-    }
-
     public float getShadowMaxDx() {
         return SHADOW_MAX_DX;
     }
@@ -84,6 +80,10 @@ public class AbsShadowData extends AbsObjectData implements EditableShadow {
             shadowRadius = radius;
             paintInvalidate = true;
         }
+    }
+
+    public void deleteResource() {
+        super.deleteResource();
     }
 
     public void putToXmlSerializer(ConfigFileData configFileData) throws Exception {
