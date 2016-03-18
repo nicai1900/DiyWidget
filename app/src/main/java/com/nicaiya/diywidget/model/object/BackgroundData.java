@@ -9,7 +9,6 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.Log;
 
-
 import com.nicaiya.diywidget.R;
 import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.model.ConfigFileData;

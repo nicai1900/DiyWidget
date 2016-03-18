@@ -12,10 +12,7 @@ import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.model.ConfigFileData;
 
 import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
-
-import java.io.IOException;
 
 public class AbsObjectData {
 

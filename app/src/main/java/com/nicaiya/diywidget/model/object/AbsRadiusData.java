@@ -2,7 +2,6 @@ package com.nicaiya.diywidget.model.object;
 
 import android.util.Log;
 
-
 import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.model.editable.EditableRadius;
 

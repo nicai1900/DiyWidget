@@ -1,6 +1,5 @@
 package com.nicaiya.diywidget.model.object;
 
-
 import android.util.Log;
 
 import com.nicaiya.diywidget.model.ConfigFileData;

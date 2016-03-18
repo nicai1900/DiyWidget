@@ -1,6 +1,5 @@
 package com.nicaiya.diywidget.model.object;
 
-
 import android.graphics.Color;
 import android.util.Log;
 
@@ -9,7 +8,6 @@ import com.nicaiya.diywidget.model.editable.EditableShadow;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlSerializer;
-
 
 public class AbsShadowData extends AbsObjectData implements EditableShadow {
 
