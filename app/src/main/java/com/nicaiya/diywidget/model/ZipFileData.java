@@ -84,7 +84,7 @@ public class ZipFileData extends ArrayList<ZipFileData.FileData> {
         }
     }
 
-    public void loadFromInPutStream(InputStream is) {
+    public void loadFromInputStream(InputStream is) {
         ZipInputStream zis = new ZipInputStream(new BufferedInputStream(is));
         try {
             ZipEntry ze;
@@ -114,7 +114,7 @@ public class ZipFileData extends ArrayList<ZipFileData.FileData> {
 
     public void loadFromByteArray(byte[] data) {
         ByteArrayInputStream is = new ByteArrayInputStream(data);
-        loadFromInPutStream(is);
+        loadFromInputStream(is);
     }
 
     public byte[] dumpToByteArray() {

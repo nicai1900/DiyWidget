@@ -226,7 +226,7 @@ public class WidgetData {
         serializer.endTag(ConfigFileData.XML_NAMESPACE, TAG);
     }
 
-    public static WidgetData createFromXmlPullParser(ConfigFileData configFileData) {
+    public static WidgetData createFromConfigFileData(ConfigFileData configFileData) {
         XmlPullParser parser = configFileData.startXmlParse();
 
         try {
@@ -285,7 +285,7 @@ public class WidgetData {
     }
 
     public static ConfigFileData getConfigFileDataWithNewName(ConfigFileData configFileData, String newName) {
-        WidgetData widgetData = createFromXmlPullParser(configFileData);
+        WidgetData widgetData = createFromConfigFileData(configFileData);
         if (widgetData != null) {
             widgetData.setName(newName);
             return widgetData.getConfigureFileData();

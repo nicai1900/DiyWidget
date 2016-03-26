@@ -33,14 +33,17 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".provider.AppWidget">
+        <receiver android:name=".provider.AppWidget_2_2">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.nicaiya.diywidget.appwidget.GET_VERSION" />
+                <action android:name="com.nicaiya.diywidget.appwidget.GET_CONFIG_DATA" />
+                <action android:name="android.appwidget.action.APPWIDGET_BIND" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/app_widget_info" />
+                android:resource="@xml/app_widget_2_2" />
         </receiver>
     </application>
 

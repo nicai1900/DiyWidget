@@ -4,6 +4,8 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 
+    <string name="default_widget">default widget</string>
+
     <string name="text">Text</string>
     <string name="image">Image</string>
     <string name="background">Background</string>

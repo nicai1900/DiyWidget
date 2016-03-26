@@ -13,9 +13,10 @@
     tools:context=".ConfigActivity"
     tools:showIn="@layout/activity_main">
 
-    <ImageView
-        android:id="@+id/widget_img"
+    <Button
+        android:id="@+id/add_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Add" />
 
 </RelativeLayout>

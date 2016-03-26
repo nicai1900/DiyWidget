@@ -1,11 +1,18 @@
 package com.nicaiya.diywidget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.View;
+
+import com.nicaiya.diywidget.model.object.ImageData;
 
 import java.util.Locale;
 
@@ -13,29 +20,31 @@ public class ResourceUtil {
     private static final boolean DEBUG = false;
     private static final String TAG = ResourceUtil.class.getSimpleName();
 
+    private static final int ICON_SIZE = 256;
+    private static ConfigActivity configActivity;
     private static Context context;
+
+    private static Activity currentActivity;
 
     public static void setContext(Context ctx) {
         context = ctx;
     }
 
-    public static Bitmap getBitmap(int resId) {
-        return BitmapFactory.decodeResource(context.getResources(), resId);
+    public static void setConfigActivity(ConfigActivity configActivity) {
+        ResourceUtil.configActivity = configActivity;
     }
 
-    public static int getColor(int resId) {
-        return context.getResources().getColor(resId);
+    public static ConfigActivity getConfigActivity() {
+        return configActivity;
     }
 
-
-    public static Locale getCurrentLocale() {
-        return context.getResources().getConfiguration().locale;
+    public static void setCurrentActivity(Activity currentActivity) {
+        ResourceUtil.currentActivity = currentActivity;
     }
 
-    public static float getDimension(int resId) {
-        return context.getResources().getDimension(resId);
+    public static Activity getCurrentActivity() {
+        return currentActivity;
     }
-
 
     public static String getString(int resId) {
         return context.getString(resId);
@@ -45,14 +54,99 @@ public class ResourceUtil {
         return context.getResources().getStringArray(resId);
     }
 
-    public static int getVersion() {
-        PackageManager manager = context.getPackageManager();
-        try {
-            return manager.getPackageInfo(context.getPackageName(), 0).versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, e.getMessage(), e);
+    public static int getColor(int resId) {
+        return context.getResources().getColor(resId);
+    }
+
+    public static float getDimension(int resId) {
+        return context.getResources().getDimension(resId);
+    }
+
+    public static Bitmap getBitmap(int resId) {
+        return BitmapFactory.decodeResource(context.getResources(), resId);
+    }
+
+    public static Bitmap getNoScaledBitmap(int resId) {
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inScaled = false;
+        return BitmapFactory.decodeResource(context.getResources(), resId, opts);
+    }
+
+    public static Bitmap decodeSampledBitmapFromResource(View view, int resId, int sampleSize) {
+        Rect outRect = new Rect();
+        view.getDrawingRect(outRect);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(context.getResources(), resId, options);
+        if (sampleSize > 1) {
+            options.inSampleSize = sampleSize;
+        } else {
+            options.inSampleSize = calculateInSampleSize(options, outRect.width(), outRect.height());
         }
-        return 0;
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(context.getResources(), resId, options);
+    }
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+    private static int getBitmapInSampleSize(int bitmapWidth, int bitmapHeight, int maxWidth, int maxHeight) {
+        if ((maxWidth != 0) && (maxHeight != 0)) {
+            int widthScale = bitmapWidth / maxWidth;
+            int heightScale = bitmapHeight / maxHeight;
+            int sampleSize = Math.min(widthScale, heightScale);
+            if (sampleSize > 0x1) {
+                int testSampleSize = 0x1;
+                while (sampleSize > testSampleSize) {
+                    testSampleSize = testSampleSize << 0x1;
+                }
+                return (testSampleSize >> 0x1);
+            }
+        }
+        return -0x2;
+    }
+
+    public static Bitmap drawableToIcon(Drawable drawable) {
+        if (drawable == null) {
+            return null;
+        }
+        Bitmap bitmap = Bitmap.createBitmap(ICON_SIZE, ICON_SIZE, Bitmap.Config.ARGB_8888);
+        if (bitmap != null) {
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, ICON_SIZE, ICON_SIZE);
+            drawable.draw(canvas);
+        }
+        return bitmap;
+    }
+
+    public static void changeAndresizeImageData(Bitmap bitmap, ImageData curData) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        float widthMax = curData.getWidth();
+        float heightMax = curData.getHeight();
+        float ration = Math.min((widthMax / (float) width), (heightMax / (float) height));
+        curData.setWidth(((float) width * ration));
+        curData.setHeight(((float) height * ration));
     }
 
     public static Bitmap createScaledOrRotatedBitmap(Bitmap input, int orientation, int maxWidth, int maxHeight) {
@@ -78,6 +172,20 @@ public class ResourceUtil {
             Log.w(TAG, e);
         }
         return null;
+    }
+
+    public static int getVersion() {
+        PackageManager manager = context.getPackageManager();
+        try {
+            return manager.getPackageInfo(context.getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, e.getMessage(), e);
+        }
+        return 0;
+    }
+
+    public static Locale getCurrentLocale() {
+        return context.getResources().getConfiguration().locale;
     }
 
 }

@@ -78,7 +78,7 @@ public class WidgetDrawable extends Drawable {
         return null;
     }
 
-    public void deleteResorce() {
+    public void deleteResource() {
         if (widgetData != null) {
             widgetData.deleteResource();
         }

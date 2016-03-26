@@ -82,6 +82,7 @@ public class ConfigFileData extends ZipFileData {
         add(versionFileData);
     }
 
+    @Override
     public void loadFromDir(File dir) {
         super.loadFromDir(dir);
         for (ZipFileData.FileData data : this) {
@@ -94,9 +95,9 @@ public class ConfigFileData extends ZipFileData {
         }
     }
 
+    @Override
     public void loadFromInputStream(InputStream is) {
-        super.loadFromInPutStream(is);
-
+        super.loadFromInputStream(is);
         for (ZipFileData.FileData data : this) {
             String name = data.getName();
             if (xmlFileData == null && (XML_FILE_NAME.equals(name))) {
@@ -107,6 +108,7 @@ public class ConfigFileData extends ZipFileData {
         }
     }
 
+    @Override
     public void loadFromAsset(AssetManager manager, String dir) {
         super.loadFromAsset(manager, dir);
         for (ZipFileData.FileData data : this) {
