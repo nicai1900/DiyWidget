@@ -22,9 +22,6 @@ import com.nicaiya.diywidget.provider.AppWidget_2_2;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by zhengjie on 16/3/19.
- */
 public class AppWidgetUpdater {
 
     private static final boolean DEG = false;
@@ -154,8 +151,8 @@ public class AppWidgetUpdater {
 
         public RemoteViewData(int widgetId) {
             appWidgetId = widgetId;
-            Intent intent = new Intent(context, BaseAppWidgetProvider.class);
-            intent.setAction(BaseAppWidgetProvider.ACTION_ON_CLICK);
+            Intent intent = new Intent(context, DiyWidgetProvider.class);
+            intent.setAction(DiyWidgetProvider.ACTION_ON_CLICK);
             pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         }
 
@@ -166,7 +163,7 @@ public class AppWidgetUpdater {
             if (appWidgetData == null) {
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                intent.setComponent(new ComponentName(context, ConfigActivity.class));
+                intent.setComponent(new ComponentName(context, DiyWidgetConfigActivity.class));
                 intent.putExtra("action", "select");
                 intent.putExtra("appWidgetId", appWidgetId);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

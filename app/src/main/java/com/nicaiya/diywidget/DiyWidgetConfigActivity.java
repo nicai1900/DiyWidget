@@ -15,10 +15,10 @@ import com.nicaiya.diywidget.database.ConfigDataBase;
 
 import java.util.List;
 
-public class ConfigActivity extends AppCompatActivity {
+public class DiyWidgetConfigActivity extends AppCompatActivity {
 
     private static final boolean DEG = false;
-    private static final String TAG = ConfigActivity.class.getSimpleName();
+    private static final String TAG = DiyWidgetConfigActivity.class.getSimpleName();
 
     private ConfigDataBase configDataBase;
     private int appWidgetId;
@@ -30,9 +30,10 @@ public class ConfigActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        configDataBase = WidgetApplication.getInstance().getConfigDataBase();
+        configDataBase = DiyWidgetApplication.getInstance().getConfigDataBase();
         configDataBase.updateDefaultFile();
         Button button = (Button) findViewById(R.id.add_btn);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +90,7 @@ public class ConfigActivity extends AppCompatActivity {
     }
 
     public void requestUpdateWidgetId(int appWidgetId) {
-        Intent intent = new Intent(this, BaseAppWidgetProvider.class);
+        Intent intent = new Intent(this, DiyWidgetProvider.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         int[] appWidgetIds = {appWidgetId};
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);

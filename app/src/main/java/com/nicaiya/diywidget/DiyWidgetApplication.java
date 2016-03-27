@@ -16,10 +16,10 @@ import com.nicaiya.diywidget.database.ConfigDataBase;
 /**
  * Created by zhengjie on 16/3/16.
  */
-public class WidgetApplication extends Application {
+public class DiyWidgetApplication extends Application {
 
     private static final boolean DEG = false;
-    private static final String TAG = WidgetApplication.class.getSimpleName();
+    private static final String TAG = DiyWidgetApplication.class.getSimpleName();
 
     private static boolean isAllReceiverRegistered = false;
 
@@ -49,6 +49,10 @@ public class WidgetApplication extends Application {
             if (batteryLevelPercent != scaledLevel) {
                 setBatteryLevelPercent(scaledLevel);
                 getConfigDataBase().saveBatteryLevel(batteryLevelPercent);
+
+                Intent newIntent = new Intent(WidgetUpdateReceiver.BATTERY_CHANGE);
+                newIntent.setComponent(new ComponentName(context, WidgetUpdateReceiver.class));
+                sendBroadcast(newIntent);
             }
         }
     };
@@ -62,9 +66,9 @@ public class WidgetApplication extends Application {
     }
 
     private static Context context;
-    private static WidgetApplication sInstance;
+    private static DiyWidgetApplication sInstance;
 
-    public static WidgetApplication getInstance() {
+    public static DiyWidgetApplication getInstance() {
         return sInstance;
     }
 

@@ -1,4 +1,4 @@
-package com.nicaiya.diywidget;
+package com.nicaiya.diywidget.util;
 
 import android.support.annotation.NonNull;
 

@@ -3,7 +3,7 @@ package com.nicaiya.diywidget.model.object;
 import android.graphics.Color;
 import android.util.Log;
 
-import com.nicaiya.diywidget.WidgetApplication;
+import com.nicaiya.diywidget.DiyWidgetApplication;
 import com.nicaiya.diywidget.font.FontItem;
 import com.nicaiya.diywidget.font.FontManager;
 import com.nicaiya.diywidget.model.ConfigFileData;
@@ -90,7 +90,7 @@ public class AbsFontData extends AbsSizeData implements EditableFont {
                                 String attrName = parser.getAttributeName(i);
                                 String attrValue = parser.getAttributeValue(i);
                                 if (attrName.equals(XMLConst.ATTRIBUTE_FONT)) {
-                                    FontManager manager = WidgetApplication.getInstance().getFontManager();
+                                    FontManager manager = DiyWidgetApplication.getInstance().getFontManager();
                                     FontItem fontItem = manager.getFontItem(attrValue);
                                     if (fontItem == null) {
                                         fontItem = manager.getDefaultFontItem();

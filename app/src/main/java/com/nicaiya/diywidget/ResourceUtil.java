@@ -21,7 +21,7 @@ public class ResourceUtil {
     private static final String TAG = ResourceUtil.class.getSimpleName();
 
     private static final int ICON_SIZE = 256;
-    private static ConfigActivity configActivity;
+    private static DiyWidgetConfigActivity configActivity;
     private static Context context;
 
     private static Activity currentActivity;
@@ -30,11 +30,11 @@ public class ResourceUtil {
         context = ctx;
     }
 
-    public static void setConfigActivity(ConfigActivity configActivity) {
+    public static void setConfigActivity(DiyWidgetConfigActivity configActivity) {
         ResourceUtil.configActivity = configActivity;
     }
 
-    public static ConfigActivity getConfigActivity() {
+    public static DiyWidgetConfigActivity getConfigActivity() {
         return configActivity;
     }
 

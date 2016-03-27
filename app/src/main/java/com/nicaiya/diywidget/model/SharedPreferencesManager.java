@@ -9,7 +9,7 @@ package com.nicaiya.diywidget.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.nicaiya.diywidget.WidgetApplication;
+import com.nicaiya.diywidget.DiyWidgetApplication;
 import com.nicaiya.diywidget.database.ConfigDataBase;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class SharedPreferencesManager {
         prefEditor = pref.edit();
         loadNameList();
         IsStartDataMoveToDataBase = true;
-        ConfigDataBase db = WidgetApplication.getInstance().getConfigDataBase();
+        ConfigDataBase db = DiyWidgetApplication.getInstance().getConfigDataBase();
         int battery = getBatteryLevel();
         if (battery != 0) {
             db.saveBatteryLevel(battery);

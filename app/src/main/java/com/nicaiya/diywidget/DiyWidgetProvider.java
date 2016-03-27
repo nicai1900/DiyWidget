@@ -21,10 +21,10 @@ import okio.BufferedSource;
 import okio.Okio;
 import okio.Source;
 
-public class BaseAppWidgetProvider extends AbsConfigDataProvider {
+public class DiyWidgetProvider extends AbsConfigDataProvider {
 
     private static final boolean DEBUG = false;
-    private static final String TAG = BaseAppWidgetProvider.class.getSimpleName();
+    private static final String TAG = DiyWidgetProvider.class.getSimpleName();
 
     public static final String ACTION_APPWIDGET_UPDATE_OPTIONS = "android.appwidget.action.APPWIDGET_UPDATE_OPTIONS";
     public static final String ACTION_ON_CLICK = "com.nicaiya.diywidget.appwidget.ON_CLICK";
@@ -33,18 +33,18 @@ public class BaseAppWidgetProvider extends AbsConfigDataProvider {
     public static final String ACTION_ON_PREV_CLICK = "com.nicaiya.diywidget.appwidget.PREV_CLICK";
     public static final String ACTION_SET_DEFAULT_CONFIG_DATA = "com.nicaiya.diywidget.appwidget.SET_DEFAULT_CONFIG_DATA";
 
-    private static final String EMPTY_FLAGE = "empty";
+    private static final String EMPTY_FLAG = "empty";
     public static final String EXTRA_DEFAULT_FILE_NAME = "fileName";
     public static final String EXTRA_WIDGET_ID = "appWidgetId";
     public static final String UNINSTALL_TARGET_APP = "removeTargetApp";
 
-    private static WidgetApplication clockApplication;
+    private static DiyWidgetApplication clockApplication;
     private static ConfigDataBase configDataBase;
     private static AppWidgetUpdater updater;
 
     private void init() {
         if (clockApplication == null) {
-            clockApplication = WidgetApplication.getInstance();
+            clockApplication = DiyWidgetApplication.getInstance();
         }
         if (configDataBase == null) {
             configDataBase = ConfigDataBase.getInstance(clockApplication);
@@ -117,7 +117,7 @@ public class BaseAppWidgetProvider extends AbsConfigDataProvider {
         ConfigFileData configFileData = configDataBase.loadConfigFileDataByWidgetId(appWidgetId);
         if (configFileData == null) {
             try {
-                out.write(EMPTY_FLAGE.getBytes());
+                out.write(EMPTY_FLAG.getBytes());
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage(), e);
             }

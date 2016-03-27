@@ -1,9 +1,6 @@
 package com.nicaiya.diywidget.provider;
 
-import com.nicaiya.diywidget.BaseAppWidgetProvider;
+import com.nicaiya.diywidget.DiyWidgetProvider;
 
-/**
- * Created by zhengjie on 16/3/20.
- */
-public class AppWidget_2_2 extends BaseAppWidgetProvider {
+public class AppWidget_2_2 extends DiyWidgetProvider {
 }

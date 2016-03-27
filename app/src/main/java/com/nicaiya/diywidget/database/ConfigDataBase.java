@@ -12,7 +12,8 @@ import android.os.AsyncTask;
 import android.provider.BaseColumns;
 import android.util.Log;
 
-import com.nicaiya.diywidget.BaseAppWidgetProvider;
+import com.nicaiya.diywidget.DiyWidgetProvider;
+import com.nicaiya.diywidget.DiyWidgetApplication;
 import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.model.SharedPreferencesManager;
 import com.nicaiya.diywidget.model.object.WidgetData;
@@ -49,7 +50,7 @@ public class ConfigDataBase {
     private static ConfigFileData savedConfigFileData = null;
     public static int defaultFileCount = 0;
 
-    private Context context;
+    private Context mContext;
 
     public static ConfigDataBase getInstance(Context context) {
         if (instance == null) {
@@ -63,7 +64,7 @@ public class ConfigDataBase {
     }
 
     private ConfigDataBase(Context context) {
-        this.context = context;
+        mContext = context;
         if (openHelper == null) {
             openHelper = new ConfigDataBase.OpenHelper(context);
         }
@@ -116,19 +117,24 @@ public class ConfigDataBase {
         List<String> nameList = loadWidgetConfigNameList();
         if (nameList.contains(name)) {
             Cursor c = loadConfigDataColumnPreViewConfigDataByName(name);
-            if ((c != null) && (c.getCount() != 0)) {
-                c.moveToFirst();
-                int previewIndex = c.getColumnIndex(DataBase.BCONFIG_PREVIEW);
-                int configDataIndex = c.getColumnIndex(DataBase.BCONFIG_DATA);
+            try {
+                if ((c != null) && (c.getCount() != 0)) {
+                    c.moveToFirst();
+                    int previewIndex = c.getColumnIndex(DataBase.BCONFIG_PREVIEW);
+                    int configDataIndex = c.getColumnIndex(DataBase.BCONFIG_DATA);
 
-                String previewFileName = c.getString(previewIndex);
-                previewFileWriter(previewFileName, preview);
+                    String previewFileName = c.getString(previewIndex);
+                    previewFileWriter(previewFileName, preview);
 
-                String configFileDataName = c.getString(configDataIndex);
-                configFileDataWriter(configFileDataName, configFileData);
-            }
-            if (c != null) {
-                c.close();
+                    String configFileDataName = c.getString(configDataIndex);
+                    configFileDataWriter(configFileDataName, configFileData);
+                }
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage(), e);
+            } finally {
+                if (c != null) {
+                    c.close();
+                }
             }
             return;
         }
@@ -150,86 +156,106 @@ public class ConfigDataBase {
 
     public ConfigFileData loadWidgetConfigFileData(String name) {
         ConfigFileData configFileData = null;
-        Cursor c;
-        c = loadConfigDataColumnConfigDataByName(name);
-        if ((c != null) && (c.getCount() != 0)) {
-            c.moveToFirst();
-            int columnIndex = c.getColumnIndex(DataBase.BCONFIG_DATA);
-            String configFileDataName = c.getString(columnIndex);
-            configFileData = configFileDataReader(configFileDataName);
+        Cursor c = null;
+        try {
+            c = loadConfigDataColumnConfigDataByName(name);
+            if ((c != null) && (c.getCount() != 0)) {
+                c.moveToFirst();
+                int columnIndex = c.getColumnIndex(DataBase.BCONFIG_DATA);
+                String configFileDataName = c.getString(columnIndex);
+                configFileData = configFileDataReader(configFileDataName);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+        } finally {
+            if (c != null) {
+                c.close();
+            }
         }
-        if (c != null) {
-            c.close();
-        }
-
         return configFileData;
     }
 
     public Bitmap loadWidgetConfigPreViewBitmap(String name) {
         Bitmap preview = null;
-        Cursor c;
-        c = loadConfigDataColumnPreViewByName(name);
-        if ((c != null) && (c.getCount() != 0)) {
-            c.moveToFirst();
-            int columnIndex = c.getColumnIndex(DataBase.BCONFIG_PREVIEW);
-            String previewFileName = c.getString(columnIndex);
-            preview = previewFileReader(previewFileName);
-        }
-        if (c != null) {
-            c.close();
+        Cursor c = null;
+        try {
+            c = loadConfigDataColumnPreViewByName(name);
+            if ((c != null) && (c.getCount() != 0)) {
+                c.moveToFirst();
+                int columnIndex = c.getColumnIndex(DataBase.BCONFIG_PREVIEW);
+                String previewFileName = c.getString(columnIndex);
+                preview = previewFileReader(previewFileName);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+        } finally {
+            if (c != null) {
+                c.close();
+            }
         }
         return preview;
     }
 
     public List<String> loadWidgetConfigNameList() {
         ArrayList<String> nameList = new ArrayList<>();
-        Cursor c;
-        c = loadConfigDataColumnNameArray();
-        if ((c != null) && (c.getCount() != 0)) {
-            while (c.moveToNext()) {
-                int columnIndex = c.getColumnIndex(DataBase.BCONFIG_NAME);
-                String name = c.getString(columnIndex);
-                if (!nameList.contains(name)) {
-                    nameList.add(name);
+        Cursor c = null;
+        try {
+            c = loadConfigDataColumnNameArray();
+            if ((c != null) && (c.getCount() != 0)) {
+                while (c.moveToNext()) {
+                    int columnIndex = c.getColumnIndex(DataBase.BCONFIG_NAME);
+                    String name = c.getString(columnIndex);
+                    if (!nameList.contains(name)) {
+                        nameList.add(name);
+                    }
                 }
             }
-        }
-        if (c != null) {
-            c.close();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+        } finally {
+            if (c != null) {
+                c.close();
+            }
         }
         return nameList;
     }
 
     public List<String> loadWidgetConfigNameListByType(int type) {
-        Cursor c;
-        c = loadConfigDataColumnNameArray();
-        ArrayList<String> nameList = new ArrayList<>();
-        if ((c != null) && (c.getCount() != 0)) {
-            while (c.moveToNext()) {
-                int columnIndex = c.getColumnIndex(DataBase.BCONFIG_NAME);
-                String name = c.getString(columnIndex);
-                if (!nameList.contains(name)) {
-                    if (type != 0) {
-                        String itemType = "";
-                        if (itemTypeMap.containsKey(name)) {
-                            itemType = itemTypeMap.get(name);
+        Cursor c = null;
+        try {
+            c = loadConfigDataColumnNameArray();
+            ArrayList<String> nameList = new ArrayList<>();
+            if ((c != null) && (c.getCount() != 0)) {
+                while (c.moveToNext()) {
+                    int columnIndex = c.getColumnIndex(DataBase.BCONFIG_NAME);
+                    String name = c.getString(columnIndex);
+                    if (!nameList.contains(name)) {
+                        if (type != 0) {
+                            String itemType = "";
+                            if (itemTypeMap.containsKey(name)) {
+                                itemType = itemTypeMap.get(name);
+                            } else {
+                                itemType = getItemType(loadWidgetConfigFileData(name));
+                                itemTypeMap.put(name, itemType);
+                            }
+                            if (itemType.contains(Integer.toString(type))) {
+                                nameList.add(name);
+                            }
                         } else {
-                            itemType = getItemType(loadWidgetConfigFileData(name));
-                            itemTypeMap.put(name, itemType);
-                        }
-                        if (itemType.contains(Integer.toString(type))) {
                             nameList.add(name);
                         }
-                    } else {
-                        nameList.add(name);
                     }
                 }
             }
+            return nameList;
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+        } finally {
+            if (c != null) {
+                c.close();
+            }
         }
-        if (c != null) {
-            c.close();
-        }
-        return nameList;
+        return null;
     }
 
     public boolean removeWidgetConfigFileData(String name) {
@@ -274,7 +300,7 @@ public class ConfigDataBase {
     }
 
     private boolean fileWriter(String fileName, byte[] data) {
-        File file = new File(context.getFilesDir(), fileName);
+        File file = new File(mContext.getFilesDir(), fileName);
         FileOutputStream os = null;
         try {
             os = new FileOutputStream(file);
@@ -309,7 +335,7 @@ public class ConfigDataBase {
     }
 
     private byte[] fileReader(String fileName) {
-        File file = new File(context.getFilesDir(), fileName);
+        File file = new File(mContext.getFilesDir(), fileName);
         BufferedSource bufferedSource = null;
         try {
             Source source = Okio.source(file);
@@ -329,7 +355,7 @@ public class ConfigDataBase {
     }
 
     private boolean fileDelete(String fileName) {
-        File file = new File(context.getFilesDir(), fileName);
+        File file = new File(mContext.getFilesDir(), fileName);
         return file.delete();
     }
 
@@ -563,17 +589,17 @@ public class ConfigDataBase {
     }
 
     public void updateDefaultFile() {
-        SharedPreferencesManager sharedPreferencesManager = SharedPreferencesManager.getInstance(context);
+        SharedPreferencesManager sharedPreferencesManager = SharedPreferencesManager.getInstance(mContext);
         if (sharedPreferencesManager != null) {
             SharedPreferencesManager.defaultFileVersion = sharedPreferencesManager.getCurrentDefaultFileVersion();
             if (SharedPreferencesManager.defaultFileVersion == SharedPreferencesManager.currentDefaultFileVersion) {
                 sharedPreferencesManager.setNextDefaultFileVersion();
-                Intent intent = new Intent(BaseAppWidgetProvider.ACTION_SET_DEFAULT_CONFIG_DATA);
-                intent.setComponent(new ComponentName(context, AppWidget_2_2.class));
-                intent.putExtra(BaseAppWidgetProvider.EXTRA_DEFAULT_FILE_NAME, "8default.zip");
-                ConfigDataBase.defaultFileCount++;
-                context.sendBroadcast(intent);
-                //  new InitTask().execute();
+//                Intent intent = new Intent(BaseAppWidgetProvider.ACTION_SET_DEFAULT_CONFIG_DATA);
+//                intent.setComponent(new ComponentName(mContext, AppWidget_2_2.class));
+//                intent.putExtra(BaseAppWidgetProvider.EXTRA_DEFAULT_FILE_NAME, "8default.zip");
+//                ConfigDataBase.defaultFileCount++;
+//                mContext.sendBroadcast(intent);
+                new InitTask().execute();
             }
         }
     }
@@ -634,6 +660,7 @@ public class ConfigDataBase {
                 }
             }
         } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
         } finally {
             if (c != null) {
                 c.close();
@@ -672,6 +699,8 @@ public class ConfigDataBase {
             }
             return nameList;
         } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+        } finally {
             if (c != null) {
                 c.close();
             }
@@ -784,43 +813,42 @@ public class ConfigDataBase {
         return null;
     }
 
-    private class InitTask extends AsyncTask<Void, Void, Void> {
+    private static class InitTask extends AsyncTask<Void, Void, Void> {
 
         protected void onPreExecute() {
             //Util.toastMessageLong(ResourceUtil.getString(0x7f070247));
         }
 
         private void initDefaultConfigFileDataformAssets(String fileName) {
-            Intent intent = new Intent(BaseAppWidgetProvider.ACTION_SET_DEFAULT_CONFIG_DATA);
-            intent.setComponent(new ComponentName(context, BaseAppWidgetProvider.class));
-            intent.putExtra(BaseAppWidgetProvider.EXTRA_DEFAULT_FILE_NAME, fileName);
+            Intent intent = new Intent(DiyWidgetProvider.ACTION_SET_DEFAULT_CONFIG_DATA);
+            intent.setComponent(new ComponentName(DiyWidgetApplication.getContext(), AppWidget_2_2.class));
+            intent.putExtra(DiyWidgetProvider.EXTRA_DEFAULT_FILE_NAME, fileName);
             ConfigDataBase.defaultFileCount++;
-            context.sendBroadcast(intent);
+            DiyWidgetApplication.getContext().sendBroadcast(intent);
         }
 
         @Override
         protected Void doInBackground(Void... params) {
             initDefaultConfigFileDataformAssets("8default.zip");
-//            initDefaultConfigFileDataformAssets("9default.zip");
-//            initDefaultConfigFileDataformAssets("10default.zip");
-//            initDefaultConfigFileDataformAssets("11default.zip");
-//            initDefaultConfigFileDataformAssets("12default.zip");
-//            initDefaultConfigFileDataformAssets("13default.zip");
-//            initDefaultConfigFileDataformAssets("14default.zip");
-//            initDefaultConfigFileDataformAssets("15default.zip");
-//            initDefaultConfigFileDataformAssets("16default.zip");
-//            initDefaultConfigFileDataformAssets("17default.zip");
-//            initDefaultConfigFileDataformAssets("18default.zip");
-//            initDefaultConfigFileDataformAssets("19default.zip");
-//            initDefaultConfigFileDataformAssets("20default.zip");
-            SharedPreferencesManager sharedPreferencesManager = SharedPreferencesManager.getInstance(context);
+            initDefaultConfigFileDataformAssets("9default.zip");
+            initDefaultConfigFileDataformAssets("10default.zip");
+            initDefaultConfigFileDataformAssets("11default.zip");
+            initDefaultConfigFileDataformAssets("12default.zip");
+            initDefaultConfigFileDataformAssets("13default.zip");
+            initDefaultConfigFileDataformAssets("14default.zip");
+            initDefaultConfigFileDataformAssets("15default.zip");
+            initDefaultConfigFileDataformAssets("16default.zip");
+            initDefaultConfigFileDataformAssets("17default.zip");
+            initDefaultConfigFileDataformAssets("18default.zip");
+            initDefaultConfigFileDataformAssets("19default.zip");
+            initDefaultConfigFileDataformAssets("20default.zip");
+            SharedPreferencesManager sharedPreferencesManager = SharedPreferencesManager.getInstance(DiyWidgetApplication.getContext());
             if (sharedPreferencesManager != null) {
                 sharedPreferencesManager.setNextDefaultFileVersion();
             }
             return null;
         }
     }
-
 
     public static class DataBase {
 

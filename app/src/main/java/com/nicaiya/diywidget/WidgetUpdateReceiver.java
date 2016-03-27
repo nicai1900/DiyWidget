@@ -15,7 +15,8 @@ public class WidgetUpdateReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        if (TIME_CHANGE.equals(action) || BATTERY_CHANGE.equals(action)) {
+        if (TIME_CHANGE.equals(action)
+                || BATTERY_CHANGE.equals(action)) {
             AppWidgetUpdater.getInstance(context).updateAllWidget();
         }
     }
