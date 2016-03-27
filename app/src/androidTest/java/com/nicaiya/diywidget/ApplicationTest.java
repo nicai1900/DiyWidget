@@ -1,4 +1,4 @@
-package diywidget.nicaiya.com.diywidget;
+package com.nicaiya.diywidget;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

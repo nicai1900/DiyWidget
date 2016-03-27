@@ -1,4 +1,4 @@
-package diywidget.nicaiya.com.diywidget;
+package com.nicaiya.diywidget;
 
 import org.junit.Test;
 

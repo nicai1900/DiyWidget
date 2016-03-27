@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -27,18 +28,19 @@ public class ConfigDataHelper {
     public static final String ACTION_GET_VERSION = "com.nicaiya.diywidget.appwidget.GET_VERSION";
     public static final String ACTION_SET_CONFIG_DATA = "com.nicaiya.diywidget.appwidget.SET_CONFIG_DATA";
 
-    public static final int CONFIG_MAX_SIZE = 0x500000;
-
-    public static final int INVALID_APP_ID = 0;
+    public static final int CONFIG_MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
     public static final String EXTRA_APP_ID = "appWidgetId";
     public static final String EXTRA_VERSION = "EXTRA_VERSION";
-    public static final int RESULT_CONFIG_COMPLETE = 0x64;
-    public static final int RESULT_CONFIG_NEEDED = 0xc8;
-    public static final int RESULT_ERROR_OVER_SIZE = 0x1f4;
-    public static final int RESULT_FAIL = 0x190;
-    public static final int RESULT_SUCCESS = 0x12c;
-    private static final int VERSION = 0x1040;
+    public static final int INVALID_APP_ID = 0;
+
+    public static final int RESULT_CONFIG_COMPLETE = 100;
+    public static final int RESULT_CONFIG_NEEDED = 200;
+    public static final int RESULT_SUCCESS = 300;
+    public static final int RESULT_FAIL = 400;
+    public static final int RESULT_ERROR_OVER_SIZE = 500;
+
+    private static final int VERSION = 4160;
     private ConfigDataHelper.ConfigDataListener listener;
 
     public ConfigDataHelper.ConfigDataListener getListener() {
@@ -92,13 +94,12 @@ public class ConfigDataHelper {
         pendingResult.finish();
     }
 
-    private void onReceiveGetVersion(Context context, BroadcastReceiver receiver, Intent intent) {
+    private void onReceiveGetVersion(Context context, BroadcastReceiver receiver, final Intent intent) {
         final BroadcastReceiver.PendingResult pendingResult = receiver.goAsync();
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Bundle extras = new Bundle();
-                pendingResultFinishWithExtras(pendingResult, extras);
+                pendingResultFinishWithExtras(pendingResult, null);
             }
         }).start();
     }
@@ -117,15 +118,23 @@ public class ConfigDataHelper {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
+                            try {
+                                File file = new File(filePath);
+                                if (file.exists() && file.length() > CONFIG_MAX_SIZE) {
+                                    listener.onErrorOverSize(context, appWidgetId);
+                                    pendingResult.setResultCode(RESULT_ERROR_OVER_SIZE);
+                                } else {
+                                    WriteSizeCountBufferedOutputStream bos = new WriteSizeCountBufferedOutputStream(new FileOutputStream(new File(filePath)));
+                                    listener.onGetConfigData(context, appWidgetId, bos);
+                                    pendingResult.setResultCode(RESULT_CONFIG_COMPLETE);
+                                }
+                            } catch (Exception e) {
+                                Log.e(TAG, e.getMessage(), e);
+                                pendingResult.setResultCode(RESULT_FAIL);
+                            }
                             Bundle extras = new Bundle();
                             extras.putInt(EXTRA_APP_ID, appWidgetId);
                             pendingResultFinishWithExtras(pendingResult, extras);
-                            try {
-                                WriteSizeCountBufferedOutputStream bos = new WriteSizeCountBufferedOutputStream(new FileOutputStream(new File(filePath)));
-                                listener.onGetConfigData(context, appWidgetId, bos);
-                            } catch (Exception e) {
-                                Log.e(TAG, e.getMessage(), e);
-                            }
                         }
                     }).start();
                 }
@@ -147,15 +156,17 @@ public class ConfigDataHelper {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            Bundle extras = new Bundle();
-                            extras.putInt(EXTRA_APP_ID, appWidgetId);
-                            pendingResultFinishWithExtras(pendingResult, extras);
                             try {
                                 BufferedInputStream bis = new BufferedInputStream(new FileInputStream(new File(filePath)));
                                 listener.onSetConfigData(context, appWidgetId, bis);
+                                pendingResult.setResultCode(RESULT_CONFIG_NEEDED);
                             } catch (Exception e) {
+                                pendingResult.setResultCode(RESULT_FAIL);
                                 Log.e(TAG, e.getMessage(), e);
                             }
+                            Bundle extras = new Bundle();
+                            extras.putInt(EXTRA_APP_ID, appWidgetId);
+                            pendingResultFinishWithExtras(pendingResult, extras);
                         }
                     }).start();
                 }
@@ -175,18 +186,16 @@ public class ConfigDataHelper {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Bundle extras = new Bundle();
-                        extras.putInt(EXTRA_APP_ID, appWidgetId);
-                        pendingResultFinishWithExtras(pendingResult, extras);
-
                         try {
                             listener.onChangeSourceBounds(context, appWidgetId, boundary);
                         } catch (Exception e) {
                             Log.e(TAG, e.getMessage(), e);
                         }
+                        Bundle extras = new Bundle();
+                        extras.putInt(EXTRA_APP_ID, appWidgetId);
+                        pendingResultFinishWithExtras(pendingResult, extras);
                     }
                 }).start();
-
             }
         }
     }
@@ -220,15 +229,17 @@ public class ConfigDataHelper {
                 super.write(a);
                 writeSize += 1;
             } catch (IOException e) {
+                Log.e(TAG, e.getMessage(), e);
                 throw e;
             }
         }
 
-        public void write(byte[] buffer, int offset, int length) throws IOException {
+        public void write(@NonNull byte[] buffer, int offset, int length) throws IOException {
             try {
                 super.write(buffer, offset, length);
                 writeSize += length;
             } catch (IOException e) {
+                Log.e(TAG, e.getMessage(), e);
                 throw e;
             }
         }
