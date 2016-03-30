@@ -9,9 +9,11 @@ import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.BatteryManager;
+import android.util.Log;
 
-import com.nicaiya.diywidget.font.FontManager;
 import com.nicaiya.diywidget.database.ConfigDataBase;
+import com.nicaiya.diywidget.font.FontManager;
+import com.nicaiya.diywidget.receiver.DiyWidgetUpdateReceiver;
 
 /**
  * Created by zhengjie on 16/3/16.
@@ -34,8 +36,9 @@ public class DiyWidgetApplication extends Application {
     private BroadcastReceiver timeChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Intent newIntent = new Intent(WidgetUpdateReceiver.TIME_CHANGE);
-            newIntent.setComponent(new ComponentName(context, WidgetUpdateReceiver.class));
+            Log.d(TAG, "action: " + intent.getAction());
+            Intent newIntent = new Intent(DiyWidgetUpdateReceiver.TIME_CHANGE);
+            newIntent.setComponent(new ComponentName(context, DiyWidgetUpdateReceiver.class));
             sendBroadcast(newIntent);
         }
     };
@@ -45,25 +48,18 @@ public class DiyWidgetApplication extends Application {
         public void onReceive(Context context, Intent intent) {
             int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
             int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0);
-            int scaledLevel = level * 100 / scale;
+            int scaledLevel = scale != 0 ? (level * 100 / scale) : level;
             if (batteryLevelPercent != scaledLevel) {
                 setBatteryLevelPercent(scaledLevel);
                 getConfigDataBase().saveBatteryLevel(batteryLevelPercent);
 
-                Intent newIntent = new Intent(WidgetUpdateReceiver.BATTERY_CHANGE);
-                newIntent.setComponent(new ComponentName(context, WidgetUpdateReceiver.class));
+                Intent newIntent = new Intent(DiyWidgetUpdateReceiver.BATTERY_CHANGE);
+                newIntent.setComponent(new ComponentName(context, DiyWidgetUpdateReceiver.class));
                 sendBroadcast(newIntent);
             }
+            Log.d(TAG, "action: " + intent.getAction() + " level: " + level);
         }
     };
-
-    static {
-        timeActionFilter = new IntentFilter();
-        timeActionFilter.addAction(Intent.ACTION_TIME_CHANGED);
-        timeActionFilter.addAction(Intent.ACTION_TIME_TICK);
-        timeActionFilter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
-        batteryFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-    }
 
     private static Context context;
     private static DiyWidgetApplication sInstance;
@@ -82,8 +78,14 @@ public class DiyWidgetApplication extends Application {
         context = this;
         sInstance = this;
         ResourceUtil.setContext(this);
+        timeActionFilter = new IntentFilter();
+        timeActionFilter.addAction(Intent.ACTION_TIME_CHANGED);
+        timeActionFilter.addAction(Intent.ACTION_TIME_TICK);
+        timeActionFilter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
+        batteryFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 
         registerAllReceiver();
+        DiyWidgetUpdateReceiver.init();
     }
 
     public FontManager getFontManager() {
@@ -101,6 +103,7 @@ public class DiyWidgetApplication extends Application {
                 registerReceiver(batteryChangeReceiver, batteryFilter);
                 isAllReceiverRegistered = true;
             } catch (Exception e) {
+                Log.e(TAG, e.getMessage(), e);
             }
         }
     }
@@ -112,6 +115,7 @@ public class DiyWidgetApplication extends Application {
                 unregisterReceiver(batteryChangeReceiver);
                 isAllReceiverRegistered = false;
             } catch (Exception e) {
+                Log.e(TAG, e.getMessage(), e);
             }
         }
     }
@@ -129,6 +133,7 @@ public class DiyWidgetApplication extends Application {
             try {
                 batteryLevelPercent = getConfigDataBase().loadBatteryLevel();
             } catch (Exception e) {
+                Log.e(TAG, e.getMessage(), e);
             }
         }
         return batteryLevelPercent;
@@ -147,6 +152,7 @@ public class DiyWidgetApplication extends Application {
                     versionCode = info.versionCode;
                 }
             } catch (PackageManager.NameNotFoundException e) {
+                Log.e(TAG, e.getMessage(), e);
             }
         }
     }

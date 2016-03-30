@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -22,10 +23,10 @@ import com.nicaiya.diywidget.provider.AppWidget_2_2;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AppWidgetUpdater {
+public class DiyWidgetUpdater {
 
     private static final boolean DEG = false;
-    private static final String TAG = AppWidgetUpdater.class.getSimpleName();
+    private static final String TAG = DiyWidgetUpdater.class.getSimpleName();
 
     private static final int UPDATE_PERIOD_ONE = 0;
     private static final int UPDATE_PERIOD_TWO = 1;
@@ -34,7 +35,7 @@ public class AppWidgetUpdater {
     public static int displayHeight;
     public static int displayWidth;
 
-    private static AppWidgetUpdater sInstance;
+    private static DiyWidgetUpdater sInstance;
 
     private ConfigDataBase configDataBase;
 
@@ -44,18 +45,18 @@ public class AppWidgetUpdater {
 
     private final Map<Integer, RemoteViewData> remoteViewDataMap = new HashMap<>();
 
-    public static AppWidgetUpdater getInstance(Context context) {
+    public static DiyWidgetUpdater getInstance(Context context) {
         if (sInstance == null) {
-            synchronized (AppWidgetUpdater.class) {
+            synchronized (DiyWidgetUpdater.class) {
                 if (sInstance == null) {
-                    sInstance = new AppWidgetUpdater(context);
+                    sInstance = new DiyWidgetUpdater(context);
                 }
             }
         }
         return sInstance;
     }
 
-    private AppWidgetUpdater(final Context context) {
+    private DiyWidgetUpdater(final Context context) {
         this.context = context;
         configDataBase = ConfigDataBase.getInstance(context);
         appWidgetManager = AppWidgetManager.getInstance(context);
@@ -196,7 +197,7 @@ public class AppWidgetUpdater {
                 return;
             }
             try {
-                bitmap.eraseColor(0);
+                bitmap.eraseColor(Color.TRANSPARENT);
                 appWidgetDrawable.draw(bitmapCanvas);
                 RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.app_widget);
                 if (bitmap.getWidth() > displayWidth || bitmap.getHeight() > displayHeight) {

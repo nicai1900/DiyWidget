@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="numbers">
+        <item>@string/zero</item>
+        <item>@string/one</item>
+        <item>@string/two</item>
+        <item>@string/three</item>
+        <item>@string/four</item>
+        <item>@string/five</item>
+        <item>@string/six</item>
+        <item>@string/seven</item>
+        <item>@string/eight</item>
+        <item>@string/nine</item>
+        <item>@string/ten</item>
+        <item>@string/eleven</item>
+        <item>@string/twelve</item>
+        <item>@string/thirteen</item>
+        <item>@string/fourteen</item>
+        <item>@string/fifteen</item>
+        <item>@string/sixteen</item>
+        <item>@string/seventeen</item>
+        <item>@string/eighteen</item>
+        <item>@string/nineteen</item>
+        <item>@string/twenty</item>
+        <item>@string/twentyone</item>
+        <item>@string/twentytwo</item>
+        <item>@string/twentythree</item>
+        <item>@string/twentyfour</item>
+        <item>@string/twentyfive</item>
+        <item>@string/twentysix</item>
+        <item>@string/twentyseven</item>
+        <item>@string/twentyeight</item>
+        <item>@string/twentynine</item>
+        <item>@string/thirty</item>
+        <item>@string/thirtyone</item>
+        <item>@string/thirtytwo</item>
+        <item>@string/thirtythree</item>
+        <item>@string/thirtyfour</item>
+        <item>@string/thirtyfive</item>
+        <item>@string/thirtysix</item>
+        <item>@string/thirtyseven</item>
+        <item>@string/thirtyeight</item>
+        <item>@string/thirtynine</item>
+        <item>@string/forty</item>
+        <item>@string/fortyone</item>
+        <item>@string/fortytwo</item>
+        <item>@string/fortythree</item>
+        <item>@string/fortyfour</item>
+        <item>@string/fortyfive</item>
+        <item>@string/fortysix</item>
+        <item>@string/fortyseven</item>
+        <item>@string/fortyeight</item>
+        <item>@string/fortynine</item>
+        <item>@string/fifty</item>
+        <item>@string/fiftyone</item>
+        <item>@string/fiftytwo</item>
+        <item>@string/fiftythree</item>
+        <item>@string/fiftyfour</item>
+        <item>@string/fiftyfive</item>
+        <item>@string/fiftysix</item>
+        <item>@string/fiftyseven</item>
+        <item>@string/fiftyeight</item>
+        <item>@string/fiftynine</item>
+        <item>@string/sixty</item>
+    </string-array>
+
+</resources>

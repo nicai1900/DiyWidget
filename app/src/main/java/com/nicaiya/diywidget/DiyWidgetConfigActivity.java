@@ -12,7 +12,11 @@ import android.widget.Button;
 
 import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.database.ConfigDataBase;
+import com.nicaiya.diywidget.model.object.WidgetData;
+import com.nicaiya.diywidget.provider.AppWidget_2_2;
+import com.nicaiya.diywidget.view.PreviewWidgetView;
 
+import java.io.IOException;
 import java.util.List;
 
 public class DiyWidgetConfigActivity extends AppCompatActivity {
@@ -45,6 +49,12 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        PreviewWidgetView previewWidgetView = (PreviewWidgetView) findViewById(R.id.widget_preview);
+        ConfigFileData configFileData = new ConfigFileData(getAssets(), "8default");
+        WidgetData widgetData = WidgetData.createFromConfigFileData(configFileData);
+        previewWidgetView.init(widgetData);
+
 
         handleIntent(getIntent());
     }
@@ -90,7 +100,7 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
     }
 
     public void requestUpdateWidgetId(int appWidgetId) {
-        Intent intent = new Intent(this, DiyWidgetProvider.class);
+        Intent intent = new Intent(this, AppWidget_2_2.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         int[] appWidgetIds = {appWidgetId};
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);

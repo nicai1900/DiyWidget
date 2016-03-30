@@ -1,8 +1,11 @@
 package com.nicaiya.diywidget.model.object;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PathEffect;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.Log;
@@ -16,7 +19,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 public class AbsObjectData {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     private static final String TAG = AbsObjectData.class.getSimpleName();
 
     public static final int ANCHOR_TYPE_LT = 0;
@@ -28,6 +31,8 @@ public class AbsObjectData {
     public static final int ANCHOR_TYPE_LB = 6;
     public static final int ANCHOR_TYPE_B = 7;
     public static final int ANCHOR_TYPE_RB = 8;
+
+    private static Paint debugPaint;
 
     protected PointF anchorOffset = new PointF();
     protected boolean anchorOffsetInvalidate = true;
@@ -223,6 +228,22 @@ public class AbsObjectData {
     }
 
     public void draw(Canvas canvas) {
+        drawDebugLine(canvas);
+    }
+
+    private void drawDebugLine(Canvas canvas) {
+        if (DEBUG) {
+            if (debugPaint == null) {
+                debugPaint = new Paint();
+                debugPaint.setAntiAlias(true);
+                debugPaint.setColor(Color.RED);
+                debugPaint.setStyle(Paint.Style.STROKE);
+                PathEffect effects = new DashPathEffect(new float[]{1, 2, 4, 8}, 1);
+                debugPaint.setPathEffect(effects);
+            }
+            Rect bounds = getBounds();
+            canvas.drawRect(bounds, debugPaint);
+        }
     }
 
     public void drawAnchor(Canvas canvas) {

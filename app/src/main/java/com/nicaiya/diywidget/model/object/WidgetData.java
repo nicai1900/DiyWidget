@@ -252,6 +252,66 @@ public class WidgetData {
                             if (widgetData != null) {
                                 widgetData.setBackground(backgroundData);
                             }
+                        } else if (BatteryBarData.TAG.equals(tag)) {
+                            BatteryBarData batteryBarData = new BatteryBarData();
+                            batteryBarData.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(batteryBarData);
+                            }
+                        } else if (BatteryTextData.TAG.equals(tag)) {
+                            BatteryTextData batteryTextData = new BatteryTextData();
+                            batteryTextData.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(batteryTextData);
+                            }
+                        } else if (DigitalClockHourNumber_0_12Data.TAG.equals(tag)) {
+                            DigitalClockHourNumber_0_12Data data = new DigitalClockHourNumber_0_12Data();
+                            data.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(data);
+                            }
+                        } else if (DigitalClockHourNumber_00_12Data.TAG.equals(tag)) {
+                            DigitalClockHourNumber_00_12Data data = new DigitalClockHourNumber_00_12Data();
+                            data.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(data);
+                            }
+                        } else if (DigitalClockHourNumber_0_24Data.TAG.equals(tag)) {
+                            DigitalClockHourNumber_0_24Data data = new DigitalClockHourNumber_0_24Data();
+                            data.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(data);
+                            }
+                        } else if (DigitalClockHourNumber_00_24Data.TAG.equals(tag)) {
+                            DigitalClockHourNumber_00_24Data data = new DigitalClockHourNumber_00_24Data();
+                            data.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(data);
+                            }
+                        } else if (DigitalClockHourTextData.TAG.equals(tag)) {
+                            DigitalClockHourTextData data = new DigitalClockHourTextData();
+                            data.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(data);
+                            }
+                        } else if (DigitalClockMinuteNumber_0_60Data.TAG.equals(tag)) {
+                            DigitalClockMinuteNumber_0_60Data data = new DigitalClockMinuteNumber_0_60Data();
+                            data.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(data);
+                            }
+                        } else if (DigitalClockMinuteNumber_00_60Data.TAG.equals(tag)) {
+                            DigitalClockMinuteNumber_00_60Data data = new DigitalClockMinuteNumber_00_60Data();
+                            data.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(data);
+                            }
+                        } else if (DigitalClockMinuteTextData.TAG.equals(tag)) {
+                            DigitalClockMinuteTextData data = new DigitalClockMinuteTextData();
+                            data.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(data);
+                            }
                         } else if (ImageData.TAG.equals(tag)) {
                             ImageData imageData = new ImageData();
                             imageData.updateFromXmlPullParser(configFileData);

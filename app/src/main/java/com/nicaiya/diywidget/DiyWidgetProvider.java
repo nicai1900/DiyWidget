@@ -40,7 +40,7 @@ public class DiyWidgetProvider extends AbsConfigDataProvider {
 
     private static DiyWidgetApplication clockApplication;
     private static ConfigDataBase configDataBase;
-    private static AppWidgetUpdater updater;
+    private static DiyWidgetUpdater updater;
 
     private void init() {
         if (clockApplication == null) {
@@ -50,7 +50,7 @@ public class DiyWidgetProvider extends AbsConfigDataProvider {
             configDataBase = ConfigDataBase.getInstance(clockApplication);
         }
         if (updater == null) {
-            updater = AppWidgetUpdater.getInstance(clockApplication);
+            updater = DiyWidgetUpdater.getInstance(clockApplication);
         }
     }
 

@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".WidgetUpdateReceiver">
+        <receiver android:name=".receiver.DiyWidgetUpdateReceiver">
 
             <intent-filter>
                 <action android:name="com.nicaiya.diywidget.TIME_CHANGE" />

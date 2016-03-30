@@ -25,10 +25,10 @@ public class PreviewWidgetView extends ImageView {
     private WidgetDrawable widgetDrawable;
 
     private boolean isRegisterReceiver = false;
-    private final BroadcastReceiver timeReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver updateReceiver = new BroadcastReceiver() {
 
         public void onReceive(Context context, Intent intent) {
-            invalidate();
+            postInvalidate();
         }
     };
 
@@ -56,7 +56,7 @@ public class PreviewWidgetView extends ImageView {
             widgetDrawable.deleteResource();
         }
         widgetDrawable = new WidgetDrawable(widgetData);
-        invalidate();
+        postInvalidate();
     }
 
     @Override
@@ -110,7 +110,8 @@ public class PreviewWidgetView extends ImageView {
             filter.addAction(Intent.ACTION_TIME_TICK);
             filter.addAction(Intent.ACTION_TIME_CHANGED);
             filter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
-            getContext().registerReceiver(timeReceiver, filter);
+            filter.addAction(Intent.ACTION_BATTERY_CHANGED);
+            getContext().registerReceiver(updateReceiver, filter);
         }
     }
 
@@ -119,7 +120,7 @@ public class PreviewWidgetView extends ImageView {
         super.onDetachedFromWindow();
         if (isRegisterReceiver) {
             isRegisterReceiver = false;
-            getContext().unregisterReceiver(timeReceiver);
+            getContext().unregisterReceiver(updateReceiver);
         }
     }
 }
