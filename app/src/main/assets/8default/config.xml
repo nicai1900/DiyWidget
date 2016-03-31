@@ -52,18 +52,6 @@
             </AbsWidthHeightData>
         </AbsOutlineData>
     </ImageData>
-    <DigitalClockAMPMTextData footer="" header="">
-        <TextData align="LEFT">
-            <AbsFontData caseType="0" color="-3211242" font="RobotoCondensed-Bold">
-                <AbsSizeData size="20.0">
-                    <AbsShadowData color="-16777216" dx="0.0" dy="0.0" radious="0.0">
-                        <AbsObjectData alpha="255" anchorType="4" left="180.0" rotate="0.0"
-                            top="130.0" />
-                    </AbsShadowData>
-                </AbsSizeData>
-            </AbsFontData>
-        </TextData>
-    </DigitalClockAMPMTextData>
     <DigitalClockSeparatorTextData>
         <TextData align="LEFT">
             <AbsFontData caseType="0" color="-3211242" font="Roboto-Thin">
@@ -100,18 +88,6 @@
             </AbsFontData>
         </TextData>
     </DigitalClockMinuteNumber_00_60_Data>
-    <DateTimeSetData footer="" header="" timeSet="15">
-        <TextData align="LEFT">
-            <AbsFontData caseType="0" color="-3211242" font="Roboto-Regular">
-                <AbsSizeData size="16.0">
-                    <AbsShadowData color="-16777216" dx="0.0" dy="0.0" radious="0.0">
-                        <AbsObjectData alpha="255" anchorType="4" left="180.0" rotate="0.0"
-                            top="268.0" />
-                    </AbsShadowData>
-                </AbsSizeData>
-            </AbsFontData>
-        </TextData>
-    </DateTimeSetData>
     <BatteryTextData footer="" header="">
         <TextData align="LEFT">
             <AbsFontData caseType="0" color="-3211242" font="RobotoCondensed-Bold">

@@ -19,7 +19,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 public class AbsObjectData {
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static final String TAG = AbsObjectData.class.getSimpleName();
 
     public static final int ANCHOR_TYPE_LT = 0;
