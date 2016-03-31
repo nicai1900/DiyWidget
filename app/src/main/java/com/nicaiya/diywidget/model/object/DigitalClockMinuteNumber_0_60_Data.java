@@ -15,15 +15,15 @@ import org.xmlpull.v1.XmlSerializer;
 
 import java.util.Calendar;
 
-public class DigitalClockMinuteNumber_0_60Data extends TextData implements EditableHeaderFooter {
+public class DigitalClockMinuteNumber_0_60_Data extends TextData implements EditableHeaderFooter {
     private static final boolean DEBUG = false;
-    public static final String TAG = DigitalClockMinuteNumber_0_60Data.class.getSimpleName();
-    private static final String SUPER_TAG = DigitalClockMinuteNumber_0_60Data.class.getSuperclass().getSimpleName();
+    public static final String TAG = DigitalClockMinuteNumber_0_60_Data.class.getSimpleName();
+    private static final String SUPER_TAG = DigitalClockMinuteNumber_0_60_Data.class.getSuperclass().getSimpleName();
 
     private String header = "";
     private String footer = "";
 
-    public DigitalClockMinuteNumber_0_60Data() {
+    public DigitalClockMinuteNumber_0_60_Data() {
         setName(ResourceUtil.getString(R.string.digital_clock_minute_number_0_60));
     }
 

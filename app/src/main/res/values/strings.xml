@@ -24,9 +24,15 @@
     <string name="digital_clock_minute_number_00_60">DigitalClockMinuteNumber_00_60</string>
     <string name="digital_clock_minute_number_0_60">DigitalClockMinuteNumber_0_60</string>
     <string name="digital_clock_minute_text">DigitalClockMinuteText</string>
-
-
+    <string name="digital_clock_separator_text">DigitalClockSeparatorText</string>
+    <string name="analog_clock">AnalogClock</string>
+    <string name="circular_arc_clock">CircularArcClock</string>
+    <string name="hotspot">Hotspot</string>
     <string name="widget">Widget</string>
+    <string name="separator">:</string>
+
+    <string name="hot_spot_remove">Remove Activity</string>
+    <string name="hot_spot_widget_editor">Edit Widget</string>
 
     <string name="zero">zero</string>
     <string name="one">one</string>

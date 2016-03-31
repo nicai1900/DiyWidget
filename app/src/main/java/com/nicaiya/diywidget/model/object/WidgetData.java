@@ -246,6 +246,12 @@ public class WidgetData {
                                     widgetData.setName(attrValue);
                                 }
                             }
+                        } else if (HotspotData.TAG.equals(tag)) {
+                            HotspotData data = new HotspotData();
+                            data.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(data);
+                            }
                         } else if (BackgroundData.TAG.equals(tag)) {
                             BackgroundData backgroundData = new BackgroundData();
                             backgroundData.updateFromXmlPullParser(configFileData);
@@ -253,16 +259,16 @@ public class WidgetData {
                                 widgetData.setBackground(backgroundData);
                             }
                         } else if (BatteryBarData.TAG.equals(tag)) {
-                            BatteryBarData batteryBarData = new BatteryBarData();
-                            batteryBarData.updateFromXmlPullParser(configFileData);
+                            BatteryBarData data = new BatteryBarData();
+                            data.updateFromXmlPullParser(configFileData);
                             if (widgetData != null) {
-                                widgetData.addData(batteryBarData);
+                                widgetData.addData(data);
                             }
                         } else if (BatteryTextData.TAG.equals(tag)) {
-                            BatteryTextData batteryTextData = new BatteryTextData();
-                            batteryTextData.updateFromXmlPullParser(configFileData);
+                            BatteryTextData data = new BatteryTextData();
+                            data.updateFromXmlPullParser(configFileData);
                             if (widgetData != null) {
-                                widgetData.addData(batteryTextData);
+                                widgetData.addData(data);
                             }
                         } else if (DigitalClockHourNumber_0_12Data.TAG.equals(tag)) {
                             DigitalClockHourNumber_0_12Data data = new DigitalClockHourNumber_0_12Data();
@@ -294,20 +300,44 @@ public class WidgetData {
                             if (widgetData != null) {
                                 widgetData.addData(data);
                             }
-                        } else if (DigitalClockMinuteNumber_0_60Data.TAG.equals(tag)) {
-                            DigitalClockMinuteNumber_0_60Data data = new DigitalClockMinuteNumber_0_60Data();
+                        } else if (DigitalClockMinuteNumber_0_60_Data.TAG.equals(tag)) {
+                            DigitalClockMinuteNumber_0_60_Data data = new DigitalClockMinuteNumber_0_60_Data();
                             data.updateFromXmlPullParser(configFileData);
                             if (widgetData != null) {
                                 widgetData.addData(data);
                             }
-                        } else if (DigitalClockMinuteNumber_00_60Data.TAG.equals(tag)) {
-                            DigitalClockMinuteNumber_00_60Data data = new DigitalClockMinuteNumber_00_60Data();
+                        } else if (DigitalClockMinuteNumber_00_60_Data.TAG.equals(tag)) {
+                            DigitalClockMinuteNumber_00_60_Data data = new DigitalClockMinuteNumber_00_60_Data();
                             data.updateFromXmlPullParser(configFileData);
                             if (widgetData != null) {
                                 widgetData.addData(data);
                             }
                         } else if (DigitalClockMinuteTextData.TAG.equals(tag)) {
                             DigitalClockMinuteTextData data = new DigitalClockMinuteTextData();
+                            data.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(data);
+                            }
+                        } else if (DigitalClockSeparatorImageData.TAG.equals(tag)) {
+                            DigitalClockSeparatorImageData data = new DigitalClockSeparatorImageData();
+                            data.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(data);
+                            }
+                        } else if (DigitalClockSeparatorTextData.TAG.equals(tag)) {
+                            DigitalClockSeparatorTextData data = new DigitalClockSeparatorTextData();
+                            data.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(data);
+                            }
+                        } else if (AnalogClockData.TAG.equals(tag)) {
+                            AnalogClockData data = new AnalogClockData();
+                            data.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(data);
+                            }
+                        } else if (CircularArcClockData.TAG.equals(tag)) {
+                            CircularArcClockData data = new CircularArcClockData();
                             data.updateFromXmlPullParser(configFileData);
                             if (widgetData != null) {
                                 widgetData.addData(data);
