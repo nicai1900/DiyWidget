@@ -3,6 +3,9 @@ package com.nicaiya.diywidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -10,13 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.database.ConfigDataBase;
+import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.model.object.WidgetData;
 import com.nicaiya.diywidget.provider.AppWidget_2_2;
 import com.nicaiya.diywidget.view.PreviewWidgetView;
 
-import java.io.IOException;
 import java.util.List;
 
 public class DiyWidgetConfigActivity extends AppCompatActivity {
@@ -36,11 +38,21 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
 
         configDataBase = DiyWidgetApplication.getInstance().getConfigDataBase();
         configDataBase.updateDefaultFile();
-        Button button = (Button) findViewById(R.id.add_btn);
 
-        button.setOnClickListener(new View.OnClickListener() {
+
+        handleIntent(getIntent());
+    }
+
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+
                 configDataBase.saveWidget(appWidgetId, "Trim metal");
                 requestUpdateWidgetId(appWidgetId);
                 Intent resultValue = new Intent();
@@ -50,13 +62,11 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
             }
         });
 
+
         PreviewWidgetView previewWidgetView = (PreviewWidgetView) findViewById(R.id.widget_preview);
         ConfigFileData configFileData = new ConfigFileData(getAssets(), "8default");
         WidgetData widgetData = WidgetData.createFromConfigFileData(configFileData);
         previewWidgetView.init(widgetData);
-
-
-        handleIntent(getIntent());
     }
 
     @Override

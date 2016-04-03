@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
+ * Widget Editor
  * Created by zhengjie on 16/3/19.
  */
 public class EditSelectActivity extends Activity {

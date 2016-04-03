@@ -89,11 +89,7 @@ public class AnalogClockData extends ImageData {
     }
 
     public void draw(Canvas canvas) {
-        Bitmap bitmap = null;
-        try {
-            bitmap = Bitmap.createBitmap(BITMAP_RES_MAX_SIZE, BITMAP_RES_MAX_SIZE, Bitmap.Config.ARGB_8888);
-        } catch (Exception e) {
-        }
+        Bitmap bitmap = Bitmap.createBitmap(BITMAP_RES_MAX_SIZE, BITMAP_RES_MAX_SIZE, Bitmap.Config.ARGB_8888);
         super.setBitmap(bitmap);
         Canvas clockCanvas = new Canvas(bitmap);
         getBitmap().eraseColor(0xffffff);

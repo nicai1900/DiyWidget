@@ -34,6 +34,10 @@
     <string name="hot_spot_remove">Remove Activity</string>
     <string name="hot_spot_widget_editor">Edit Widget</string>
 
+    <string name="widget_preview_op_add">Add</string>
+    <string name="widget_preview_op_edit">Edit</string>
+    <string name="widget_preview_op_delete">Delete</string>
+
     <string name="zero">zero</string>
     <string name="one">one</string>
     <string name="two">two</string>
