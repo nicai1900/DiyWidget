@@ -30,6 +30,8 @@
     <string name="hotspot">Hotspot</string>
     <string name="widget">Widget</string>
     <string name="separator">:</string>
+    <string name="date_time_set">DateTimeSet</string>
+    <string name="digital_clock_am_pm_text">DigitalClockAMPMText</string>
 
     <string name="hot_spot_remove">Remove Activity</string>
     <string name="hot_spot_widget_editor">Edit Widget</string>
@@ -37,6 +39,9 @@
     <string name="widget_preview_op_add">Add</string>
     <string name="widget_preview_op_edit">Edit</string>
     <string name="widget_preview_op_delete">Delete</string>
+
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
 
     <string name="zero">zero</string>
     <string name="one">one</string>

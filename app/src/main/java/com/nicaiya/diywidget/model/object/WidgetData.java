@@ -330,6 +330,18 @@ public class WidgetData {
                             if (widgetData != null) {
                                 widgetData.addData(data);
                             }
+                        } else if (DateTimeSetData.TAG.equals(tag)) {
+                            DateTimeSetData data = new DateTimeSetData();
+                            data.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(data);
+                            }
+                        } else if (DigitalClockAMPMTextData.TAG.equals(tag)) {
+                            DigitalClockAMPMTextData data = new DigitalClockAMPMTextData();
+                            data.updateFromXmlPullParser(configFileData);
+                            if (widgetData != null) {
+                                widgetData.addData(data);
+                            }
                         } else if (AnalogClockData.TAG.equals(tag)) {
                             AnalogClockData data = new AnalogClockData();
                             data.updateFromXmlPullParser(configFileData);
