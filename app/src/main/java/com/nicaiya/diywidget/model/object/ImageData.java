@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.Log;
 
@@ -101,6 +102,10 @@ public class ImageData extends AbsOutlineData {
             this.matrix.reset();
             if (this.canvas != null) {
                 this.matrix.setScale(getReverseLR(), getReverseUD(), canvas.getWidth() / 2, canvas.getHeight() / 2);
+                PointF anchorOffset = getAnchorOffset();
+                this.matrix.preTranslate(getLeft(), getTop());
+                this.matrix.preRotate(getRotate());
+                this.matrix.preTranslate(-anchorOffset.x, -anchorOffset.y);
             }
         }
     }

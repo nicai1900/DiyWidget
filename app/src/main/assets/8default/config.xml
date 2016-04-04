@@ -52,6 +52,7 @@
             </AbsWidthHeightData>
         </AbsOutlineData>
     </ImageData>
+
     <DigitalClockSeparatorTextData>
         <TextData align="LEFT">
             <AbsFontData caseType="0" color="-3211242" font="Roboto-Thin">
@@ -88,6 +89,7 @@
             </AbsFontData>
         </TextData>
     </DigitalClockMinuteNumber_00_60_Data>
+
     <BatteryTextData footer="" header="">
         <TextData align="LEFT">
             <AbsFontData caseType="0" color="-3211242" font="RobotoCondensed-Bold">
