@@ -9,13 +9,12 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
         android:orientation="vertical">
 
         <com.nicaiya.diywidget.view.PreviewWidgetView
             android:id="@+id/widget_preview"
             android:layout_width="300dp"
-            android:layout_height="200dp"
+            android:layout_height="160dp"
             tools:background="@android:color/white" />
 
         <TextView
@@ -25,7 +24,7 @@
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="2dp"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             tools:text="Name" />
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

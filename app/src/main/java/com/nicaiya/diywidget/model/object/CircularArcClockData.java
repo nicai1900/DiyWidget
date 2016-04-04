@@ -1,6 +1,5 @@
 package com.nicaiya.diywidget.model.object;
 
-
 import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
