@@ -1,6 +1,5 @@
 package com.nicaiya.diywidget.model.object;
 
-
 import android.graphics.Canvas;
 import android.text.TextUtils;
 import android.util.Log;
@@ -31,11 +30,6 @@ public class DateTimeSetData extends TextData implements EditableHeaderFooter {
     private static final int TT_LANGUAGE_LONG = 6;
     private static final int TT_LANGUAGE_SHORT = 7;
 
-    private DateTimeSetData.TIME_SET curTimeSet;
-
-    private int gap = 0;
-    private String gapString = "";
-    private int type = 0;
     private DateTimeSetData.TIME_SET[] timeSetList = new DateTimeSetData.TIME_SET[]{
             DateTimeSetData.TIME_SET.TYPE_1, DateTimeSetData.TIME_SET.TYPE_2, DateTimeSetData.TIME_SET.TYPE_3,
             DateTimeSetData.TIME_SET.TYPE_4, DateTimeSetData.TIME_SET.TYPE_5, DateTimeSetData.TIME_SET.TYPE_6,
@@ -46,14 +40,20 @@ public class DateTimeSetData extends TextData implements EditableHeaderFooter {
             DateTimeSetData.TIME_SET.TYPE_19, DateTimeSetData.TIME_SET.TYPE_20, DateTimeSetData.TIME_SET.TYPE_21,
             DateTimeSetData.TIME_SET.TYPE_22};
 
+    private DateTimeSetData.TIME_SET curTimeSet;
+    private String gapString = "";
+    private int gap = 0;
+
+    private int type = 0;
+
+    private String header = "";
+    private String footer = "";
+
     public DateTimeSetData() {
         setType(type);
         setName(ResourceUtil.getString(R.string.date_time_set));
         setSize(25.0f);
     }
-
-    private String header = "";
-    private String footer = "";
 
     public void setHeader(String header) {
         if (!this.header.equals(header)) {
@@ -289,28 +289,28 @@ public class DateTimeSetData extends TextData implements EditableHeaderFooter {
     }
 
     public enum TIME_SET {
-        TYPE_1(9, 2, 3, 3),
-        TYPE_2(9, 2, 3, 3),
-        TYPE_3(9, 2, 3, 3),
-        TYPE_4(9, 2, 3, 3),
-        TYPE_5(9, 2, 3, 3),
-        TYPE_6(9, 2, 3, 3),
-        TYPE_7(9, 2, 3, 3),
-        TYPE_8(9, 2, 3, 3),
-        TYPE_9(9, 2, 3, 3),
-        TYPE_10(9, 2, 3, 3),
-        TYPE_11(9, 2, 3, 3),
-        TYPE_12(9, 2, 3, 3),
-        TYPE_13(9, 2, 3, 3),
-        TYPE_14(9, 2, 3, 3),
-        TYPE_15(9, 2, 3, 3),
-        TYPE_16(9, 2, 3, 3),
-        TYPE_17(9, 2, 3, 3),
-        TYPE_18(9, 2, 3, 3),
-        TYPE_19(9, 2, 3, 3),
-        TYPE_20(9, 2, 3, 3),
-        TYPE_21(9, 2, 3, 3),
-        TYPE_22(9, 2, 3, 3);
+        TYPE_1(1, 2, 2, 1),
+        TYPE_2(1, 3, 3, 4),
+        TYPE_3(1, 2, 2, 5),
+        TYPE_4(1, 3, 3, 5),
+        TYPE_5(2, 2, 2, 4),
+        TYPE_6(2, 3, 3, 4),
+        TYPE_7(2, 2, 2, 5),
+        TYPE_8(2, 3, 3, 5),
+        TYPE_9(1, 2, 2, 0),
+        TYPE_10(2, 3, 3, 0),
+        TYPE_11(0, 2, 2, 4),
+        TYPE_12(0, 3, 3, 4),
+        TYPE_13(0, 2, 2, 5),
+        TYPE_14(0, 3, 3, 5),
+        TYPE_15(0, 4, 2, 4),
+        TYPE_16(0, 5, 3, 4),
+        TYPE_17(0, 4, 2, 5),
+        TYPE_18(0, 5, 3, 5),
+        TYPE_19(1, 2, 2, 6),
+        TYPE_20(1, 2, 2, 7),
+        TYPE_21(0, 2, 2, 6),
+        TYPE_22(0, 2, 2, 7);
 
         public final int dayOfWeekType;
         public final int dayType;

@@ -1,6 +1,8 @@
 package com.nicaiya.diywidget.model;
 
+import android.annotation.TargetApi;
 import android.content.res.AssetManager;
+import android.os.Build;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -12,6 +14,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.zip.ZipEntry;
@@ -171,6 +175,10 @@ public class ZipFileData extends ArrayList<ZipFileData.FileData> {
 
         public byte[] getData() {
             return data;
+        }
+
+        public String getDataAsText() {
+            return new String(data, Charset.forName("UTF-8"));
         }
 
         @Override
