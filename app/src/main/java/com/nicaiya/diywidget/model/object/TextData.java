@@ -147,10 +147,7 @@ public class TextData extends AbsFontData {
                                     setAlign(Paint.Align.valueOf(attrValue));
                                 }
                             }
-                            eventType = parser.next();
-                            if (eventType == XmlPullParser.TEXT) {
-                                setText(parser.getText());
-                            }
+                            setText(parser.nextText());
                         } else if (SUPER_TAG.equals(parser.getName())) {
                             super.updateFromXmlPullParser(data);
                         }
@@ -159,6 +156,9 @@ public class TextData extends AbsFontData {
                         if (TAG.equals(tag)) {
                             return;
                         }
+                    case XmlPullParser.TEXT:
+                        setText(parser.getText());
+                        break;
                     default:
                         break;
                 }

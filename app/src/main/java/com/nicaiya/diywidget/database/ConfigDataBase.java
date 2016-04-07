@@ -830,18 +830,18 @@ public class ConfigDataBase {
         @Override
         protected Void doInBackground(Void... params) {
             initDefaultConfigFileDataformAssets("8default.zip");
-            initDefaultConfigFileDataformAssets("9default.zip");
-            initDefaultConfigFileDataformAssets("10default.zip");
-            initDefaultConfigFileDataformAssets("11default.zip");
-            initDefaultConfigFileDataformAssets("12default.zip");
-            initDefaultConfigFileDataformAssets("13default.zip");
-            initDefaultConfigFileDataformAssets("14default.zip");
-            initDefaultConfigFileDataformAssets("15default.zip");
-            initDefaultConfigFileDataformAssets("16default.zip");
-            initDefaultConfigFileDataformAssets("17default.zip");
-            initDefaultConfigFileDataformAssets("18default.zip");
-            initDefaultConfigFileDataformAssets("19default.zip");
-            initDefaultConfigFileDataformAssets("20default.zip");
+//            initDefaultConfigFileDataformAssets("9default.zip");
+//            initDefaultConfigFileDataformAssets("10default.zip");
+//            initDefaultConfigFileDataformAssets("11default.zip");
+//            initDefaultConfigFileDataformAssets("12default.zip");
+//            initDefaultConfigFileDataformAssets("13default.zip");
+//            initDefaultConfigFileDataformAssets("14default.zip");
+//            initDefaultConfigFileDataformAssets("15default.zip");
+//            initDefaultConfigFileDataformAssets("16default.zip");
+//            initDefaultConfigFileDataformAssets("17default.zip");
+//            initDefaultConfigFileDataformAssets("18default.zip");
+//            initDefaultConfigFileDataformAssets("19default.zip");
+//            initDefaultConfigFileDataformAssets("20default.zip");
             SharedPreferencesManager sharedPreferencesManager = SharedPreferencesManager.getInstance(DiyWidgetApplication.getContext());
             if (sharedPreferencesManager != null) {
                 sharedPreferencesManager.setNextDefaultFileVersion();
