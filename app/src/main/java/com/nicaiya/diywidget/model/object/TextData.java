@@ -147,7 +147,6 @@ public class TextData extends AbsFontData {
                                     setAlign(Paint.Align.valueOf(attrValue));
                                 }
                             }
-                            setText(parser.nextText());
                         } else if (SUPER_TAG.equals(parser.getName())) {
                             super.updateFromXmlPullParser(data);
                         }
