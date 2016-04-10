@@ -885,7 +885,7 @@ public class ConfigDataBase {
         public static final String RAW_QUERY_COUNT_WIDGET = "select COUNT(*) from widget";
     }
 
-    public static class OpenHelper extends SQLiteOpenHelper {
+    public class OpenHelper extends SQLiteOpenHelper {
 
         public OpenHelper(Context context) {
             super(context, DataBase.BDATABASE_NAME, null, DataBase.BDATABASE_VERSION_DEFAULT_FILE_VER_2);

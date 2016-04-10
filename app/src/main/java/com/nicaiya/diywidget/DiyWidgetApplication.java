@@ -91,11 +91,11 @@ public class DiyWidgetApplication extends Application {
     }
 
     public FontManager getFontManager() {
-        return FontManager.getInstance(this);
+        return FontManager.getInstance(context);
     }
 
     public ConfigDataBase getConfigDataBase() {
-        return ConfigDataBase.getInstance(this);
+        return ConfigDataBase.getInstance(context);
     }
 
     public void registerAllReceiver() {

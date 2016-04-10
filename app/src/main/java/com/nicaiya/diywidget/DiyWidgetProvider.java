@@ -9,10 +9,11 @@ import android.content.nicaiya.AbsConfigDataProvider;
 import android.os.Process;
 import android.util.Log;
 
+import com.nicaiya.diywidget.database.ConfigDataBase;
 import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.model.SharedPreferencesManager;
-import com.nicaiya.diywidget.database.ConfigDataBase;
 import com.nicaiya.diywidget.model.object.WidgetData;
+import com.nicaiya.diywidget.view.MainMenuView;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -162,18 +163,13 @@ public class DiyWidgetProvider extends AbsConfigDataProvider {
     }
 
     private void updateMainList() {
-//        try {
-//            ClockConfigureActivity clockConfigureActivity = ResourceUtil.getClockConfigureActivity();
-//            if (clockConfigureActivity != null) {
-//                MainMenuView mainMenuView = clockConfigureActivity.getMainMenuView();
-//                if (mainMenuView != null) {
-//                    mainMenuView.onUpdate();
-//                    return;
-//                }
-//            }catch(Exception localException1){
-//            }
-//
-//        }
+        DiyWidgetConfigActivity clockConfigureActivity = ResourceUtil.getConfigActivity();
+        if (clockConfigureActivity != null) {
+            MainMenuView mainMenuView = clockConfigureActivity.getMainMenuView();
+            if (mainMenuView != null) {
+                mainMenuView.onUpdate();
+            }
+        }
     }
 
     private void onReceiveSetDefaultConfigData(Context context, Intent intent) {

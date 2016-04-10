@@ -3,7 +3,8 @@ package com.nicaiya.diywidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -12,8 +13,7 @@ import android.view.View;
 
 import com.nicaiya.diywidget.database.ConfigDataBase;
 import com.nicaiya.diywidget.model.ConfigFileData;
-import com.nicaiya.diywidget.model.object.WidgetData;
-import com.nicaiya.diywidget.view.PreviewWidgetView;
+import com.nicaiya.diywidget.view.MainMenuView;
 
 import java.util.List;
 
@@ -25,44 +25,51 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
     private ConfigDataBase configDataBase;
     private int appWidgetId;
 
+    private MainMenuView mainMenuView;
+    private View editorView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ResourceUtil.setConfigActivity(this);
+        configDataBase = DiyWidgetApplication.getInstance().getConfigDataBase();
+        configDataBase.updateDefaultFile();
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        configDataBase = DiyWidgetApplication.getInstance().getConfigDataBase();
-        configDataBase.updateDefaultFile();
+        onNewIntent(getIntent());
+    }
 
-
-        handleIntent(getIntent());
+    public ConfigDataBase getConfigDataBase() {
+        return configDataBase;
     }
 
     @Override
     public void onContentChanged() {
         super.onContentChanged();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                configDataBase.saveWidget(appWidgetId, "Trim metal");
+//                requestUpdateWidgetId(appWidgetId);
+//                Intent resultValue = new Intent();
+//                resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+//                setResult(RESULT_OK, resultValue);
+//                finish();
+//            }
+//        });
 
-                configDataBase.saveWidget(appWidgetId, "Trim metal");
-                requestUpdateWidgetId(appWidgetId);
-                Intent resultValue = new Intent();
-                resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-                setResult(RESULT_OK, resultValue);
-                finish();
-            }
-        });
 
-
-        PreviewWidgetView previewWidgetView = (PreviewWidgetView) findViewById(R.id.widget_preview);
-        ConfigFileData configFileData = new ConfigFileData(getAssets(), "8default");
-        WidgetData widgetData = WidgetData.createFromConfigFileData(configFileData);
-        previewWidgetView.init(widgetData);
+//        PreviewWidgetView previewWidgetView = (PreviewWidgetView) findViewById(R.id.widget_preview);
+//        ConfigFileData configFileData = new ConfigFileData(getAssets(), "8default");
+//        WidgetData widgetData = WidgetData.createFromConfigFileData(configFileData);
+//        previewWidgetView.init(widgetData);
     }
 
     @Override
@@ -82,7 +89,21 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void handleIntent(Intent intent) {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        DiyWidgetApplication.getInstance().getFontManager().loadFont();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ResourceUtil.setConfigActivity(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         Bundle extras = intent.getExtras();
         if (extras != null) {
             appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -90,13 +111,61 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
                 ConfigFileData configFileData = configDataBase.loadConfigFileDataByWidgetId(appWidgetId);
                 if (configFileData != null) {
                     configDataBase.setLastConfigFileData(configFileData);
-                    // TODO: 16/3/26 show edit view
-                } else {
-
+                    //showEditorView(WidgetData.createFromConfigFileData(configFileData), "addObjectMessageEdit");
+                    return;
                 }
+                showMainView();
+            }
+        }
+        if (editorView != null) {
+            editorView = null;
+        }
+        if (mainMenuView != null) {
+            mainMenuView.removeAllViews();
+            mainMenuView = null;
+        }
+        showMainView();
+    }
+
+    private void showMainView() {
+        fragmentReplace("main_list");
+    }
+
+    private void fragmentReplace(String reqNewFragmentView) {
+        Fragment newFragment = null;
+        //currentViewStatus = reqNewFragmentView;
+        if (reqNewFragmentView.equals("main_list")) {
+            if (mainMenuView != null) {
+                setCurrentView(mainMenuView);
+                return;
+            }
+            newFragment = new ListFragment();
+        } else if (reqNewFragmentView.equals("main_edit")) {
+            if (editorView != null) {
+                setCurrentView(editorView);
+                //editorView.onUpdateBgColor();
+                return;
+            }
+            newFragment = new EditFragment();
+        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.container, newFragment);
+        transaction.commitAllowingStateLoss();
+    }
+
+    public void setCurrentView(View view) {
+        if (view instanceof MainMenuView) {
+            view.setVisibility(View.VISIBLE);
+            if (editorView != null) {
+                editorView.setVisibility(View.GONE);
             }
         }
     }
+
+    public MainMenuView getMainMenuView() {
+        return mainMenuView;
+    }
+
 
     public void requestUpdateWidgetByName(String name) {
         List<Integer> widgetIdList = configDataBase.loadWidgetIDListByName(name);
@@ -112,6 +181,5 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         sendBroadcast(intent);
     }
-
 
 }
