@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Demo</string>
+    <string name="action_settings">设置</string>
+    <string name="widget_name_2_2">Diy Widget (2x2)</string>
+
+    <string name="loading">加载插件中</string>
+    <string name="text">文本</string>
+    <string name="image">图片</string>
+
+    <string name="background">Background</string>
+
+    <string name="battery_bar">条状电量</string>
+    <string name="battery_circle">圆形电量</string>
+    <string name="battery_text">数字电量</string>
+
+</resources>

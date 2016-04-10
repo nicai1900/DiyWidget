@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Widget List
+ * Widget Edit
  * Created by zhengjie on 16/3/22.
  */
-public class ListFragment extends Fragment {
+public class EditFragment extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class ListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_widget_list, container, false);
+        return inflater.inflate(R.layout.fragment_widget_edit, container, false);
     }
 
     @Override

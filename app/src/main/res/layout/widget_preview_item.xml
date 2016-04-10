@@ -11,11 +11,25 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.nicaiya.diywidget.view.PreviewWidgetView
-            android:id="@+id/widget_preview"
-            android:layout_width="300dp"
-            android:layout_height="160dp"
-            tools:background="@android:color/white" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.nicaiya.diywidget.view.PreviewWidgetView
+                android:id="@+id/widget_preview"
+                android:layout_width="300dp"
+                android:layout_height="160dp"
+                tools:background="@android:color/white" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="invisible" />
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/widget_name"
@@ -36,7 +50,7 @@
             <TextView
                 android:id="@+id/add"
                 style="@style/WidgetPreviewOpText"
-                android:text="@string/widget_preview_op_add"
+                android:text="@string/widget_preview_op_add_home"
                 tools:text="Add" />
 
             <TextView
