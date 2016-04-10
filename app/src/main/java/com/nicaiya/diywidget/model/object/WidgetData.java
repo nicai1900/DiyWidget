@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.R;
 import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.drawable.WidgetDrawable;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class WidgetData {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     private static final String TAG = WidgetData.class.getSimpleName();
 
     public static final int ALL_WIDGET = 0;

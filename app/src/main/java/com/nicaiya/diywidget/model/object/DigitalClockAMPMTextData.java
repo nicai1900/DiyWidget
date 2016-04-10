@@ -1,9 +1,9 @@
 package com.nicaiya.diywidget.model.object;
 
-
 import android.graphics.Canvas;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.R;
 import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.model.ConfigFileData;
@@ -15,7 +15,7 @@ import org.xmlpull.v1.XmlSerializer;
 import java.util.Calendar;
 
 public class DigitalClockAMPMTextData extends TextData implements EditableHeaderFooter {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     public static final String TAG = DigitalClockAMPMTextData.class.getSimpleName();
     private static final String SUPER_TAG = DigitalClockAMPMTextData.class.getSuperclass().getSimpleName();
     private String header = "";

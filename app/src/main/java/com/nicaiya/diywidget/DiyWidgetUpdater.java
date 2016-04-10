@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class DiyWidgetUpdater {
 
-    private static final boolean DEG = false;
+    private static final boolean DEG = BuildConfig.DEBUG;
     private static final String TAG = DiyWidgetUpdater.class.getSimpleName();
 
     private static final int UPDATE_PERIOD_ONE = 0;

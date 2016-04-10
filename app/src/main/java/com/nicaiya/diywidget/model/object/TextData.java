@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.R;
 import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.model.ConfigFileData;
@@ -15,7 +16,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 public class TextData extends AbsFontData {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     public static final String TAG = TextData.class.getSimpleName();
     private static final String SUPER_TAG = TextData.class.getSuperclass().getSimpleName();
 

@@ -10,6 +10,7 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.R;
 import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.model.ConfigFileData;
@@ -19,7 +20,9 @@ import org.xmlpull.v1.XmlSerializer;
 
 public class AbsObjectData {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
+    private static final boolean DEBUG_DRAW = false;
+
     private static final String TAG = AbsObjectData.class.getSimpleName();
 
     public static final int ANCHOR_TYPE_LT = 0;
@@ -232,7 +235,7 @@ public class AbsObjectData {
     }
 
     private void drawDebugLine(Canvas canvas) {
-        if (DEBUG) {
+        if (DEBUG_DRAW) {
             if (debugPaint == null) {
                 debugPaint = new Paint();
                 debugPaint.setAntiAlias(true);

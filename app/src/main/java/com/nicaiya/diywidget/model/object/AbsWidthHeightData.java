@@ -2,6 +2,7 @@ package com.nicaiya.diywidget.model.object;
 
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.model.editable.EditableWidthHeight;
 
@@ -9,7 +10,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlSerializer;
 
 public class AbsWidthHeightData extends AbsShadowData implements EditableWidthHeight {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
 
     private static final String SUPER_TAG = AbsWidthHeightData.class.getSuperclass().getSimpleName();
     private static final String TAG = AbsWidthHeightData.class.getSimpleName();

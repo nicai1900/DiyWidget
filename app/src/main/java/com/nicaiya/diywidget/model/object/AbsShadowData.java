@@ -3,6 +3,7 @@ package com.nicaiya.diywidget.model.object;
 import android.graphics.Color;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.model.editable.EditableShadow;
 
@@ -11,7 +12,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 public class AbsShadowData extends AbsObjectData implements EditableShadow {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     private static final String SUPER_TAG = AbsShadowData.class.getSuperclass().getSimpleName();
     private static final String TAG = AbsShadowData.class.getSimpleName();
 

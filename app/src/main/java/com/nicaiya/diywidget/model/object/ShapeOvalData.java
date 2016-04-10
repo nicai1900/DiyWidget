@@ -16,6 +16,7 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.R;
 import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.model.ConfigFileData;
@@ -26,7 +27,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 public class ShapeOvalData extends AbsOutlineData implements EditableFillStyle {
 
-    public static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     public static final String TAG = ShapeOvalData.class.getSimpleName();
     private static final String SUPER_TAG = ShapeOvalData.class.getSuperclass().getSimpleName();
 

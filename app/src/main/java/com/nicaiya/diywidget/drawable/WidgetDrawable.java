@@ -7,13 +7,14 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.model.object.AbsObjectData;
 import com.nicaiya.diywidget.model.object.WidgetData;
 
 
 public class WidgetDrawable extends Drawable {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     private WidgetData widgetData;
     private int alpha = 255;
 

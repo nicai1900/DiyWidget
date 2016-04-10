@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import android.util.Xml;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.model.object.XMLBitmapUtil;
 
@@ -22,7 +23,7 @@ import java.io.InputStream;
 
 public class ConfigFileData extends ZipFileData {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     private static final String TAG = ConfigFileData.class.getSimpleName();
 
     private static final String APP_VERSION_KEY = "app";

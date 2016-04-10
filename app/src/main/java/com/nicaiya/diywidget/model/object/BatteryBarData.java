@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.DiyWidgetApplication;
 import com.nicaiya.diywidget.R;
 import com.nicaiya.diywidget.ResourceUtil;
@@ -17,7 +18,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 public class BatteryBarData extends ShapeRectData {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     public static final String TAG = BatteryBarData.class.getSimpleName();
     private static final String SUPER_TAG = BatteryBarData.class.getSuperclass().getSimpleName();
 

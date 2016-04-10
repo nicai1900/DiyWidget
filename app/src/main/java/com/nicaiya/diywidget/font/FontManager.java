@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Environment;
 
+import com.nicaiya.diywidget.BuildConfig;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ import java.util.Map;
  */
 public class FontManager implements Comparator<FontItem>, FilenameFilter {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     private static final String TAG = FontManager.class.getSimpleName();
 
     public static final String ROBOTOCONDENSED_BOLD_NAME = "RobotoCondensed-Bold";

@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.R;
 import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.model.ConfigFileData;
@@ -18,7 +19,7 @@ import java.util.Calendar;
 
 public class AnalogClockData extends ImageData {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     public static final String TAG = AnalogClockData.class.getSimpleName();
     private static final String SUPER_TAG = AnalogClockData.class.getSuperclass().getSimpleName();
 

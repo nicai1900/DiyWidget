@@ -9,6 +9,7 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.R;
 import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.model.ConfigFileData;
@@ -19,7 +20,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 public class BackgroundData extends AbsRadiusData implements EditableFillStyle {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     private static final String SUPER_TAG = BackgroundData.class.getSuperclass().getSimpleName();
     public static final String TAG = BackgroundData.class.getSimpleName();
 

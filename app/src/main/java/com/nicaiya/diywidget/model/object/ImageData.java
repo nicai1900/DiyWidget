@@ -8,6 +8,7 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.R;
 import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.model.ConfigFileData;
@@ -17,7 +18,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 public class ImageData extends AbsOutlineData {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     private static final String SUPER_TAG = ImageData.class.getSuperclass().getSimpleName();
     public static final String TAG = ImageData.class.getSimpleName();
 

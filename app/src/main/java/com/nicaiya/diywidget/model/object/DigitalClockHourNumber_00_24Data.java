@@ -5,6 +5,7 @@ package com.nicaiya.diywidget.model.object;
 import android.graphics.Canvas;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.R;
 import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.model.ConfigFileData;
@@ -16,7 +17,7 @@ import org.xmlpull.v1.XmlSerializer;
 import java.util.Calendar;
 
 public class DigitalClockHourNumber_00_24Data extends TextData implements EditableHeaderFooter {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     public static final String TAG = DigitalClockHourNumber_00_24Data.class.getSimpleName();
     private static final String SUPER_TAG = DigitalClockHourNumber_00_24Data.class.getSuperclass().getSimpleName();
 

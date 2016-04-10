@@ -5,6 +5,7 @@ package com.nicaiya.diywidget.model.object;
 import android.graphics.Canvas;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.DiyWidgetApplication;
 import com.nicaiya.diywidget.R;
 import com.nicaiya.diywidget.ResourceUtil;
@@ -16,7 +17,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 public class BatteryTextData extends TextData implements EditableHeaderFooter {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     public static final String TAG = BatteryTextData.class.getSimpleName();
     private static final String SUPER_TAG = BatteryTextData.class.getSuperclass().getSimpleName();
     private String header = "";

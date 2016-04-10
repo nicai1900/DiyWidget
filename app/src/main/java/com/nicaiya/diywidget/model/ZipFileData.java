@@ -1,9 +1,9 @@
 package com.nicaiya.diywidget.model;
 
-import android.annotation.TargetApi;
 import android.content.res.AssetManager;
-import android.os.Build;
 import android.util.Log;
+
+import com.nicaiya.diywidget.BuildConfig;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.zip.ZipEntry;
@@ -24,7 +23,7 @@ import java.util.zip.ZipOutputStream;
 
 public class ZipFileData extends ArrayList<ZipFileData.FileData> {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     private static final String TAG = ZipFileData.class.getSimpleName();
 
     public static final int FILE_SIGNATURE = 67324752;

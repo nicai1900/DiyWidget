@@ -17,7 +17,7 @@ import com.nicaiya.diywidget.model.object.ImageData;
 import java.util.Locale;
 
 public class ResourceUtil {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     private static final String TAG = ResourceUtil.class.getSimpleName();
 
     private static final int ICON_SIZE = 256;

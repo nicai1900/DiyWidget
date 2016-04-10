@@ -23,7 +23,7 @@ import okio.Source;
 
 public class DiyWidgetProvider extends AbsConfigDataProvider {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     private static final String TAG = DiyWidgetProvider.class.getSimpleName();
 
     public static final String ACTION_APPWIDGET_UPDATE_OPTIONS = "android.appwidget.action.APPWIDGET_UPDATE_OPTIONS";

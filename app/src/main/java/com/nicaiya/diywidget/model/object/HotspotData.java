@@ -7,7 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.Log;
 
-
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.DiyWidgetApplication;
 import com.nicaiya.diywidget.DiyWidgetConfigActivity;
 import com.nicaiya.diywidget.R;
@@ -18,7 +18,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlSerializer;
 
 public class HotspotData extends AbsObjectData {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     private Bitmap icon;
     private Intent intent;
     private String label;

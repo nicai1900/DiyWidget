@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.model.ConfigFileData;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -14,7 +15,7 @@ import java.io.ByteArrayOutputStream;
 
 public class XMLBitmapUtil {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     public static final String TAG = XMLBitmapUtil.class.getSimpleName();
 
     public static final String FILE = "file:";

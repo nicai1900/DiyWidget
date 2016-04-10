@@ -86,7 +86,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_2_1" />
         </receiver>
-
         <receiver
             android:name=".provider.AppWidget_2_2"
             android:label="@string/widget_name_2_2">
@@ -144,6 +143,10 @@
                 android:resource="@xml/app_widget_5_1" />
         </receiver>
 
+        <service
+            android:name=".service.DiyWidgetService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

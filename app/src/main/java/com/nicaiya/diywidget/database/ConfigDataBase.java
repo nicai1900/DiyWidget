@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.provider.BaseColumns;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.DiyWidgetApplication;
 import com.nicaiya.diywidget.DiyWidgetProvider;
 import com.nicaiya.diywidget.model.ConfigFileData;
@@ -35,7 +36,7 @@ import okio.Source;
 
 public class ConfigDataBase {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     private static final String TAG = ConfigDataBase.class.getSimpleName();
 
     private static final String DEFAULT_FILE_NAME = "";

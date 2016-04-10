@@ -20,7 +20,7 @@ import com.nicaiya.diywidget.receiver.DiyWidgetUpdateReceiver;
  */
 public class DiyWidgetApplication extends Application {
 
-    private static final boolean DEG = false;
+    private static final boolean DEG = BuildConfig.DEBUG;
     private static final String TAG = DiyWidgetApplication.class.getSimpleName();
 
     private static boolean isAllReceiverRegistered = false;
@@ -36,7 +36,9 @@ public class DiyWidgetApplication extends Application {
     private BroadcastReceiver timeChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "action: " + intent.getAction());
+            if (DEG) {
+                Log.d(TAG, "action: " + intent.getAction());
+            }
             Intent newIntent = new Intent(DiyWidgetUpdateReceiver.TIME_CHANGE);
             newIntent.setComponent(new ComponentName(context, DiyWidgetUpdateReceiver.class));
             sendBroadcast(newIntent);

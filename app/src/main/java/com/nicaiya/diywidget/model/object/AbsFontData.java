@@ -3,6 +3,7 @@ package com.nicaiya.diywidget.model.object;
 import android.graphics.Color;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.DiyWidgetApplication;
 import com.nicaiya.diywidget.font.FontItem;
 import com.nicaiya.diywidget.font.FontManager;
@@ -14,7 +15,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 public class AbsFontData extends AbsSizeData implements EditableFont {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     public static final String TAG = AbsFontData.class.getSimpleName();
     private static final String SUPER_TAG = AbsFontData.class.getSuperclass().getSimpleName();
 

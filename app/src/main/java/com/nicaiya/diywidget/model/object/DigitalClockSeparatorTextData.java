@@ -3,6 +3,7 @@ package com.nicaiya.diywidget.model.object;
 import android.graphics.Canvas;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.R;
 import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.model.ConfigFileData;

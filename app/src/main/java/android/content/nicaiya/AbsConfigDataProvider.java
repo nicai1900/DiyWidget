@@ -2,18 +2,19 @@ package android.content.nicaiya;
 
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.graphics.Rect;
-
-import java.io.OutputStream;
-
 import android.content.Intent;
+import android.graphics.Rect;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
+
 import java.io.InputStream;
+import java.io.OutputStream;
+
 
 public abstract class AbsConfigDataProvider extends AppWidgetProvider implements ConfigDataHelper.ConfigDataListener {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     private static final String TAG = AbsConfigDataProvider.class.getSimpleName();
 
     private ConfigDataHelper helper;

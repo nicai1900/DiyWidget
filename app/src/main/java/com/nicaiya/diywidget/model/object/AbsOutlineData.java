@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.util.Log;
 
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.model.editable.EditableOutline;
 
@@ -13,7 +14,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 public class AbsOutlineData extends AbsWidthHeightData implements EditableOutline {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     private static final String SUPER_TAG = AbsOutlineData.class.getSuperclass().getSimpleName();
     private static final String TAG = AbsOutlineData.class.getSimpleName();
 

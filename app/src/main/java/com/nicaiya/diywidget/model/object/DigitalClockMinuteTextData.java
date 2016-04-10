@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.util.Calendar;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.R;
 import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.model.ConfigFileData;
@@ -16,7 +17,7 @@ import org.xmlpull.v1.XmlSerializer;
 import org.xmlpull.v1.XmlPullParser;
 
 public class DigitalClockMinuteTextData extends TextData implements EditableHeaderFooter {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     public static final String TAG = DigitalClockMinuteTextData.class.getSimpleName();
     private static final String SUPER_TAG = DigitalClockMinuteTextData.class.getSuperclass().getSimpleName();
     static final String[] numberString = ResourceUtil.getStringArray(R.array.numbers);

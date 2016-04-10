@@ -19,7 +19,7 @@ import java.util.List;
 
 public class DiyWidgetConfigActivity extends AppCompatActivity {
 
-    private static final boolean DEG = false;
+    private static final boolean DEG = BuildConfig.DEBUG;
     private static final String TAG = DiyWidgetConfigActivity.class.getSimpleName();
 
     private ConfigDataBase configDataBase;

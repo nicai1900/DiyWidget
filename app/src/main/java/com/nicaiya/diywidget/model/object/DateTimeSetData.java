@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.R;
 import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.model.ConfigFileData;
@@ -17,7 +18,7 @@ import java.util.Locale;
 
 public class DateTimeSetData extends TextData implements EditableHeaderFooter {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     public static final String TAG = DateTimeSetData.class.getSimpleName();
     private static final String SUPER_TAG = DateTimeSetData.class.getSuperclass().getSimpleName();
 
