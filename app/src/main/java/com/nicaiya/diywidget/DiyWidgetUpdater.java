@@ -13,12 +13,11 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.nicaiya.diywidget.database.ConfigDataBase;
 import com.nicaiya.diywidget.drawable.WidgetDrawable;
 import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.model.SharedPreferencesManager;
-import com.nicaiya.diywidget.database.ConfigDataBase;
 import com.nicaiya.diywidget.model.object.WidgetData;
-import com.nicaiya.diywidget.provider.AppWidget_2_2;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,7 +67,7 @@ public class DiyWidgetUpdater {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                updateWidget(appWidgetManager.getAppWidgetIds(new ComponentName(context, AppWidget_2_2.class)));
+                updateWidget(appWidgetManager.getAppWidgetIds(new ComponentName(context, DiyWidgetProvider.class)));
                 return null;
             }
         }.execute();
@@ -176,7 +175,7 @@ public class DiyWidgetUpdater {
 
         public void doDrawDefault() {
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.app_widget_default);
-            remoteViews.setOnClickPendingIntent(R.id.default_widget_container, pendingIntent);
+            remoteViews.setOnClickPendingIntent(R.id.loading_tv, pendingIntent);
             try {
                 appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
             } catch (Exception e) {

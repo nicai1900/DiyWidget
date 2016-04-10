@@ -12,13 +12,12 @@ import android.os.AsyncTask;
 import android.provider.BaseColumns;
 import android.util.Log;
 
-import com.nicaiya.diywidget.DiyWidgetProvider;
 import com.nicaiya.diywidget.DiyWidgetApplication;
+import com.nicaiya.diywidget.DiyWidgetProvider;
 import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.model.SharedPreferencesManager;
 import com.nicaiya.diywidget.model.object.WidgetData;
 import com.nicaiya.diywidget.model.object.XMLBitmapUtil;
-import com.nicaiya.diywidget.provider.AppWidget_2_2;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -813,7 +812,7 @@ public class ConfigDataBase {
         return null;
     }
 
-    private static class InitTask extends AsyncTask<Void, Void, Void> {
+    private class InitTask extends AsyncTask<Void, Void, Void> {
 
         protected void onPreExecute() {
             //Util.toastMessageLong(ResourceUtil.getString(0x7f070247));
@@ -821,27 +820,27 @@ public class ConfigDataBase {
 
         private void initDefaultConfigFileDataformAssets(String fileName) {
             Intent intent = new Intent(DiyWidgetProvider.ACTION_SET_DEFAULT_CONFIG_DATA);
-            intent.setComponent(new ComponentName(DiyWidgetApplication.getContext(), AppWidget_2_2.class));
+            intent.setComponent(new ComponentName(mContext, DiyWidgetProvider.class));
             intent.putExtra(DiyWidgetProvider.EXTRA_DEFAULT_FILE_NAME, fileName);
             ConfigDataBase.defaultFileCount++;
-            DiyWidgetApplication.getContext().sendBroadcast(intent);
+            mContext.sendBroadcast(intent);
         }
 
         @Override
         protected Void doInBackground(Void... params) {
             initDefaultConfigFileDataformAssets("8default.zip");
-//            initDefaultConfigFileDataformAssets("9default.zip");
-//            initDefaultConfigFileDataformAssets("10default.zip");
-//            initDefaultConfigFileDataformAssets("11default.zip");
-//            initDefaultConfigFileDataformAssets("12default.zip");
-//            initDefaultConfigFileDataformAssets("13default.zip");
-//            initDefaultConfigFileDataformAssets("14default.zip");
-//            initDefaultConfigFileDataformAssets("15default.zip");
-//            initDefaultConfigFileDataformAssets("16default.zip");
-//            initDefaultConfigFileDataformAssets("17default.zip");
-//            initDefaultConfigFileDataformAssets("18default.zip");
-//            initDefaultConfigFileDataformAssets("19default.zip");
-//            initDefaultConfigFileDataformAssets("20default.zip");
+            initDefaultConfigFileDataformAssets("9default.zip");
+            initDefaultConfigFileDataformAssets("10default.zip");
+            initDefaultConfigFileDataformAssets("11default.zip");
+            initDefaultConfigFileDataformAssets("12default.zip");
+            initDefaultConfigFileDataformAssets("13default.zip");
+            initDefaultConfigFileDataformAssets("14default.zip");
+            initDefaultConfigFileDataformAssets("15default.zip");
+            initDefaultConfigFileDataformAssets("16default.zip");
+            initDefaultConfigFileDataformAssets("17default.zip");
+            initDefaultConfigFileDataformAssets("18default.zip");
+            initDefaultConfigFileDataformAssets("19default.zip");
+            initDefaultConfigFileDataformAssets("20default.zip");
             SharedPreferencesManager sharedPreferencesManager = SharedPreferencesManager.getInstance(DiyWidgetApplication.getContext());
             if (sharedPreferencesManager != null) {
                 sharedPreferencesManager.setNextDefaultFileVersion();

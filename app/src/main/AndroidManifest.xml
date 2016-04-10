@@ -33,19 +33,58 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".EditSelectActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver android:name=".receiver.DiyWidgetUpdateReceiver">
-
             <intent-filter>
                 <action android:name="com.nicaiya.diywidget.TIME_CHANGE" />
                 <action android:name="com.nicaiya.diywidget.BATTERY_CHANGE" />
             </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".DiyWidgetProvider"
+            android:label="@string/widget_name_1_1">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_BIND" />
+                <action android:name="com.nicaiya.diywidget.appwidget.GET_VERSION" />
+                <action android:name="com.nicaiya.diywidget.appwidget.GET_CONFIG_DATA" />
+            </intent-filter>
 
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_1_1" />
+        </receiver>
+        <receiver
+            android:name=".provider.AppWidget_1_2"
+            android:label="@string/widget_name_1_2">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_BIND" />
+                <action android:name="com.nicaiya.diywidget.appwidget.GET_VERSION" />
+                <action android:name="com.nicaiya.diywidget.appwidget.GET_CONFIG_DATA" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_1_2" />
+        </receiver>
+        <receiver
+            android:name=".provider.AppWidget_2_1"
+            android:label="@string/widget_name_2_1">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_BIND" />
+                <action android:name="com.nicaiya.diywidget.appwidget.GET_VERSION" />
+                <action android:name="com.nicaiya.diywidget.appwidget.GET_CONFIG_DATA" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_2_1" />
         </receiver>
 
         <receiver
@@ -62,6 +101,49 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_2_2" />
         </receiver>
+        <receiver
+            android:name=".provider.AppWidget_3_1"
+            android:label="@string/widget_name_3_1">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_BIND" />
+                <action android:name="com.nicaiya.diywidget.appwidget.GET_VERSION" />
+                <action android:name="com.nicaiya.diywidget.appwidget.GET_CONFIG_DATA" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_3_1" />
+        </receiver>
+        <receiver
+            android:name=".provider.AppWidget_4_1"
+            android:label="@string/widget_name_4_1">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_BIND" />
+                <action android:name="com.nicaiya.diywidget.appwidget.GET_VERSION" />
+                <action android:name="com.nicaiya.diywidget.appwidget.GET_CONFIG_DATA" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_4_1" />
+        </receiver>
+        <receiver
+            android:name=".provider.AppWidget_5_1"
+            android:label="@string/widget_name_5_1">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_BIND" />
+                <action android:name="com.nicaiya.diywidget.appwidget.GET_VERSION" />
+                <action android:name="com.nicaiya.diywidget.appwidget.GET_CONFIG_DATA" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_5_1" />
+        </receiver>
+
     </application>
 
 </manifest>
