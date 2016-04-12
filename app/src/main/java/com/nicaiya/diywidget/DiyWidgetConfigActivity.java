@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.nicaiya.diywidget.database.ConfigDataBase;
 import com.nicaiya.diywidget.model.ConfigFileData;
+import com.nicaiya.diywidget.provider.AppWidget_1_1;
 import com.nicaiya.diywidget.view.MainMenuView;
 
 import java.util.List;
@@ -175,7 +176,7 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
     }
 
     public void requestUpdateWidgetId(int appWidgetId) {
-        Intent intent = new Intent(this, DiyWidgetProvider.class);
+        Intent intent = new Intent(this, AppWidget_1_1.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         int[] appWidgetIds = {appWidgetId};
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);

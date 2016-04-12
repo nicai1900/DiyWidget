@@ -14,7 +14,7 @@ import android.util.Log;
 
 import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.DiyWidgetApplication;
-import com.nicaiya.diywidget.DiyWidgetProvider;
+import com.nicaiya.diywidget.provider.AppWidget_1_1;
 import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.model.SharedPreferencesManager;
 import com.nicaiya.diywidget.model.object.WidgetData;
@@ -820,9 +820,9 @@ public class ConfigDataBase {
         }
 
         private void initDefaultConfigFileDataformAssets(String fileName) {
-            Intent intent = new Intent(DiyWidgetProvider.ACTION_SET_DEFAULT_CONFIG_DATA);
-            intent.setComponent(new ComponentName(mContext, DiyWidgetProvider.class));
-            intent.putExtra(DiyWidgetProvider.EXTRA_DEFAULT_FILE_NAME, fileName);
+            Intent intent = new Intent(AppWidget_1_1.ACTION_SET_DEFAULT_CONFIG_DATA);
+            intent.setComponent(new ComponentName(mContext, AppWidget_1_1.class));
+            intent.putExtra(AppWidget_1_1.EXTRA_DEFAULT_FILE_NAME, fileName);
             ConfigDataBase.defaultFileCount++;
             mContext.sendBroadcast(intent);
         }

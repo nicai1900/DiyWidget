@@ -18,6 +18,7 @@ import com.nicaiya.diywidget.drawable.WidgetDrawable;
 import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.model.SharedPreferencesManager;
 import com.nicaiya.diywidget.model.object.WidgetData;
+import com.nicaiya.diywidget.provider.AppWidget_1_1;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,7 +68,7 @@ public class DiyWidgetUpdater {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                updateWidget(appWidgetManager.getAppWidgetIds(new ComponentName(context, DiyWidgetProvider.class)));
+                updateWidget(appWidgetManager.getAppWidgetIds(new ComponentName(context, AppWidget_1_1.class)));
                 return null;
             }
         }.execute();
@@ -151,8 +152,8 @@ public class DiyWidgetUpdater {
 
         public RemoteViewData(int widgetId) {
             appWidgetId = widgetId;
-            Intent intent = new Intent(context, DiyWidgetProvider.class);
-            intent.setAction(DiyWidgetProvider.ACTION_ON_CLICK);
+            Intent intent = new Intent(context, AppWidget_1_1.class);
+            intent.setAction(AppWidget_1_1.ACTION_ON_CLICK);
             pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         }
 

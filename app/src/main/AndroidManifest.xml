@@ -45,7 +45,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".DiyWidgetProvider"
+            android:name=".provider.AppWidget_1_1"
             android:label="@string/widget_name_1_1">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

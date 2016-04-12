@@ -1,4 +1,4 @@
-package com.nicaiya.diywidget;
+package com.nicaiya.diywidget.provider;
 
 import android.app.ActivityManager;
 import android.appwidget.AppWidgetManager;
@@ -9,6 +9,12 @@ import android.content.nicaiya.AbsConfigDataProvider;
 import android.os.Process;
 import android.util.Log;
 
+import com.nicaiya.diywidget.BuildConfig;
+import com.nicaiya.diywidget.DiyWidgetApplication;
+import com.nicaiya.diywidget.DiyWidgetConfigActivity;
+import com.nicaiya.diywidget.DiyWidgetUpdater;
+import com.nicaiya.diywidget.EditSelectActivity;
+import com.nicaiya.diywidget.ResourceUtil;
 import com.nicaiya.diywidget.database.ConfigDataBase;
 import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.model.SharedPreferencesManager;
@@ -22,10 +28,10 @@ import okio.BufferedSource;
 import okio.Okio;
 import okio.Source;
 
-public class DiyWidgetProvider extends AbsConfigDataProvider {
+public class AppWidget_1_1 extends AbsConfigDataProvider {
 
     private static final boolean DEBUG = BuildConfig.DEBUG;
-    private static final String TAG = DiyWidgetProvider.class.getSimpleName();
+    private static final String TAG = AppWidget_1_1.class.getSimpleName();
 
     public static final String ACTION_APPWIDGET_UPDATE_OPTIONS = "android.appwidget.action.APPWIDGET_UPDATE_OPTIONS";
     public static final String ACTION_ON_CLICK = "com.nicaiya.diywidget.appwidget.ON_CLICK";
@@ -48,7 +54,7 @@ public class DiyWidgetProvider extends AbsConfigDataProvider {
             clockApplication = DiyWidgetApplication.getInstance();
         }
         if (configDataBase == null) {
-            configDataBase = ConfigDataBase.getInstance(clockApplication);
+            configDataBase = clockApplication.getConfigDataBase();
         }
         if (updater == null) {
             updater = DiyWidgetUpdater.getInstance(clockApplication);
@@ -66,16 +72,12 @@ public class DiyWidgetProvider extends AbsConfigDataProvider {
         if (action != null) {
             if (ACTION_SET_DEFAULT_CONFIG_DATA.equals(action)) {
                 onReceiveSetDefaultConfigData(context, intent);
-                return;
-            }
-            if ((ACTION_ON_CLICK.equals(action))
+            } else if ((ACTION_ON_CLICK.equals(action))
                     || (ACTION_ON_PLAY_CLICK.equals(action))
                     || (ACTION_ON_NEXT_CLICK.equals(action))
                     || (ACTION_ON_PREV_CLICK.equals(action))) {
                 onClickWidget(context, intent);
-                return;
-            }
-            if (ACTION_APPWIDGET_UPDATE_OPTIONS.equals(action)) {
+            } else if (ACTION_APPWIDGET_UPDATE_OPTIONS.equals(action)) {
                 updater.updateAllWidget();
             }
         }
@@ -176,12 +178,12 @@ public class DiyWidgetProvider extends AbsConfigDataProvider {
         String fileName = intent.getStringExtra(EXTRA_DEFAULT_FILE_NAME);
         try {
             InputStream is = context.getAssets().open(fileName);
-            boolean success = onSetConfigData(context, 0, is);
+            boolean success = onSetConfigData(context, AppWidgetManager.INVALID_APPWIDGET_ID, is);
             if (success) {
                 updateMainList();
             }
             is.close();
-            configDataBase.removeWidgetByWidgetId(0);
+            configDataBase.removeWidgetByWidgetId(AppWidgetManager.INVALID_APPWIDGET_ID);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);
         }
@@ -208,7 +210,7 @@ public class DiyWidgetProvider extends AbsConfigDataProvider {
                     .setComponent(componentName);
             Intent editIntent = new Intent(launchIntent);
             editIntent.putExtra(EXTRA_WIDGET_ID, appWidgetId);
-            editIntent.addFlags(0x14000000);
+            editIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             context.startActivity(editIntent);
             if (ResourceUtil.getCurrentActivity() != null) {
                 ResourceUtil.getCurrentActivity().finish();
@@ -223,9 +225,9 @@ public class DiyWidgetProvider extends AbsConfigDataProvider {
         }
     }
 
-    private boolean isClicked(Context context, int appWidgetid) {
+    private boolean isClicked(Context context, int appWidgetId) {
         SharedPreferencesManager sharedPreferencesManager = SharedPreferencesManager.getInstance(context);
-        return sharedPreferencesManager.getWidgetClick(appWidgetid);
+        return sharedPreferencesManager.getWidgetClick(appWidgetId);
     }
 }
 
