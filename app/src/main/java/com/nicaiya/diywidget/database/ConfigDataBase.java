@@ -14,11 +14,14 @@ import android.util.Log;
 
 import com.nicaiya.diywidget.BuildConfig;
 import com.nicaiya.diywidget.DiyWidgetApplication;
-import com.nicaiya.diywidget.provider.AppWidget_1_1;
+import com.nicaiya.diywidget.R;
+import com.nicaiya.diywidget.ResourceUtil;
+import com.nicaiya.diywidget.Util;
 import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.model.SharedPreferencesManager;
 import com.nicaiya.diywidget.model.object.WidgetData;
 import com.nicaiya.diywidget.model.object.XMLBitmapUtil;
+import com.nicaiya.diywidget.provider.AppWidget_1_1;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -594,11 +597,6 @@ public class ConfigDataBase {
             SharedPreferencesManager.defaultFileVersion = sharedPreferencesManager.getCurrentDefaultFileVersion();
             if (SharedPreferencesManager.defaultFileVersion == SharedPreferencesManager.currentDefaultFileVersion) {
                 sharedPreferencesManager.setNextDefaultFileVersion();
-//                Intent intent = new Intent(BaseAppWidgetProvider.ACTION_SET_DEFAULT_CONFIG_DATA);
-//                intent.setComponent(new ComponentName(mContext, AppWidget_2_2.class));
-//                intent.putExtra(BaseAppWidgetProvider.EXTRA_DEFAULT_FILE_NAME, "8default.zip");
-//                ConfigDataBase.defaultFileCount++;
-//                mContext.sendBroadcast(intent);
                 new InitTask().execute();
             }
         }
@@ -816,15 +814,7 @@ public class ConfigDataBase {
     private class InitTask extends AsyncTask<Void, Void, Void> {
 
         protected void onPreExecute() {
-            //Util.toastMessageLong(ResourceUtil.getString(0x7f070247));
-        }
-
-        private void initDefaultConfigFileDataformAssets(String fileName) {
-            Intent intent = new Intent(AppWidget_1_1.ACTION_SET_DEFAULT_CONFIG_DATA);
-            intent.setComponent(new ComponentName(mContext, AppWidget_1_1.class));
-            intent.putExtra(AppWidget_1_1.EXTRA_DEFAULT_FILE_NAME, fileName);
-            ConfigDataBase.defaultFileCount++;
-            mContext.sendBroadcast(intent);
+            Util.toastMessageLong(ResourceUtil.getString(R.string.loading_msg));
         }
 
         @Override
@@ -847,6 +837,14 @@ public class ConfigDataBase {
                 sharedPreferencesManager.setNextDefaultFileVersion();
             }
             return null;
+        }
+
+        private void initDefaultConfigFileDataformAssets(String fileName) {
+            Intent intent = new Intent(AppWidget_1_1.ACTION_SET_DEFAULT_CONFIG_DATA);
+            intent.setComponent(new ComponentName(mContext, AppWidget_1_1.class));
+            intent.putExtra(AppWidget_1_1.EXTRA_DEFAULT_FILE_NAME, fileName);
+            ConfigDataBase.defaultFileCount++;
+            mContext.sendBroadcast(intent);
         }
     }
 

@@ -19,6 +19,12 @@ import com.nicaiya.diywidget.model.ConfigFileData;
 import com.nicaiya.diywidget.model.SharedPreferencesManager;
 import com.nicaiya.diywidget.model.object.WidgetData;
 import com.nicaiya.diywidget.provider.AppWidget_1_1;
+import com.nicaiya.diywidget.provider.AppWidget_1_2;
+import com.nicaiya.diywidget.provider.AppWidget_2_1;
+import com.nicaiya.diywidget.provider.AppWidget_2_2;
+import com.nicaiya.diywidget.provider.AppWidget_3_1;
+import com.nicaiya.diywidget.provider.AppWidget_4_1;
+import com.nicaiya.diywidget.provider.AppWidget_5_1;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,6 +75,13 @@ public class DiyWidgetUpdater {
             @Override
             protected Void doInBackground(Void... params) {
                 updateWidget(appWidgetManager.getAppWidgetIds(new ComponentName(context, AppWidget_1_1.class)));
+                updateWidget(appWidgetManager.getAppWidgetIds(new ComponentName(context, AppWidget_1_2.class)));
+                updateWidget(appWidgetManager.getAppWidgetIds(new ComponentName(context, AppWidget_2_1.class)));
+                updateWidget(appWidgetManager.getAppWidgetIds(new ComponentName(context, AppWidget_2_2.class)));
+                updateWidget(appWidgetManager.getAppWidgetIds(new ComponentName(context, AppWidget_3_1.class)));
+                updateWidget(appWidgetManager.getAppWidgetIds(new ComponentName(context, AppWidget_4_1.class)));
+                updateWidget(appWidgetManager.getAppWidgetIds(new ComponentName(context, AppWidget_5_1.class)));
+
                 return null;
             }
         }.execute();
@@ -104,7 +117,6 @@ public class DiyWidgetUpdater {
             data.doDraw();
         }
     }
-
 
     public void removeWidget(int[] appWidgetIds) {
         if (appWidgetIds != null) {
@@ -166,7 +178,7 @@ public class DiyWidgetUpdater {
                 intent.addCategory(Intent.CATEGORY_LAUNCHER);
                 intent.setComponent(new ComponentName(context, DiyWidgetConfigActivity.class));
                 intent.putExtra("action", "select");
-                intent.putExtra("appWidgetId", appWidgetId);
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             } else {

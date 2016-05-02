@@ -157,6 +157,7 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
     public void setCurrentView(View view) {
         if (view instanceof MainMenuView) {
             view.setVisibility(View.VISIBLE);
+            mainMenuView = (MainMenuView) view;
             if (editorView != null) {
                 editorView.setVisibility(View.GONE);
             }
