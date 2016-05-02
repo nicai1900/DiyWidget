@@ -2,14 +2,14 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    app:cardCornerRadius="4dp">
+    android:layout_margin="5dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="5dp">
 
     <LinearLayout
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
@@ -43,29 +43,27 @@
             android:textColor="@android:color/black"
             tools:text="Name" />
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:id="@+id/widget_preview_op"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/add"
+            <Button
+                android:id="@+id/add_btn"
                 style="@style/WidgetPreviewOpText"
                 android:text="@string/widget_preview_op_add_home"
                 tools:text="Add" />
 
-            <TextView
-                android:id="@+id/edit"
+            <Button
+                android:id="@+id/edit_btn"
                 style="@style/WidgetPreviewOpText"
-                android:enabled="false"
                 android:text="@string/widget_preview_op_edit"
                 tools:text="Edit" />
 
-            <TextView
-                android:id="@+id/delete"
+            <Button
+                android:id="@+id/delete_btn"
                 style="@style/WidgetPreviewOpText"
-                android:enabled="false"
                 android:text="@string/widget_preview_op_delete"
                 tools:text="Delete" />
 

@@ -13,8 +13,8 @@
     <string name="loading_msg">Loading… Please wait</string>
 
     <!-- widget preview ops -->
-    <string name="widget_preview_op_add_home">Add to Home</string>
-    <string name="widget_preview_op_edit">Edit</string>
+    <string name="widget_preview_op_add_home">Add to home</string>
+    <string name="widget_preview_op_edit">Edit widget</string>
     <string name="widget_preview_op_delete">Delete</string>
 
     <!-- object names -->

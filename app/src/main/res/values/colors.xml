@@ -7,4 +7,8 @@
     <color name="object_anchor">#ff40ccb1</color>
     <color name="object_focus">#ff40ccb1</color>
 
+    <color name="black">#ff000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="gray">#aaa</color>
+    <color name="lighter_gray">#ddd</color>
 </resources>

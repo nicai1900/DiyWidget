@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.nicaiya.diywidget.DiyWidgetConfigActivity;
@@ -41,9 +42,24 @@ public class MainMenuView extends FrameLayout {
         super.onFinishInflate();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.widget_list);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
 
         widgetListAdapter = new WidgetListAdapter();
+        widgetListAdapter.setOnItemChildViewClickListener(new WidgetListAdapter.OnItemChildViewClickListener() {
+            @Override
+            public void onChildViewClick(View view, int position, long itemId) {
+                switch (view.getId()) {
+                    case R.id.add_btn:
+                        activity.addWidget(widgetListAdapter.getItem(position));
+                        break;
+                    case R.id.delete_btn:
+                        break;
+                    case R.id.edit_btn:
+                        break;
+                }
+            }
+        });
         recyclerView.setAdapter(widgetListAdapter);
 
         setActivity(ResourceUtil.getConfigActivity());

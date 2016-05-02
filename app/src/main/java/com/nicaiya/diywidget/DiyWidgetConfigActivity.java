@@ -1,5 +1,6 @@
 package com.nicaiya.diywidget;
 
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +14,9 @@ import android.view.View;
 
 import com.nicaiya.diywidget.database.ConfigDataBase;
 import com.nicaiya.diywidget.model.ConfigFileData;
+import com.nicaiya.diywidget.model.object.WidgetData;
 import com.nicaiya.diywidget.provider.AppWidget_1_1;
+import com.nicaiya.diywidget.view.EditorView;
 import com.nicaiya.diywidget.view.MainMenuView;
 
 import java.util.List;
@@ -23,11 +26,16 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
     private static final boolean DEG = BuildConfig.DEBUG;
     private static final String TAG = DiyWidgetConfigActivity.class.getSimpleName();
 
+    public static final String VIEW_EDIT = "main_edit";
+    public static final String VIEW_LIST = "main_list";
+
+    private String currentViewStatus = VIEW_LIST;
+    private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private ConfigDataBase configDataBase;
-    private int appWidgetId;
 
     private MainMenuView mainMenuView;
-    private View editorView;
+    private EditorView editorView;
+    private WidgetData editWidgetData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,27 +58,15 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
     @Override
     public void onContentChanged() {
         super.onContentChanged();
+    }
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                configDataBase.saveWidget(appWidgetId, "Trim metal");
-//                requestUpdateWidgetId(appWidgetId);
-//                Intent resultValue = new Intent();
-//                resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-//                setResult(RESULT_OK, resultValue);
-//                finish();
-//            }
-//        });
-
-
-//        PreviewWidgetView previewWidgetView = (PreviewWidgetView) findViewById(R.id.widget_preview);
-//        ConfigFileData configFileData = new ConfigFileData(getAssets(), "8default");
-//        WidgetData widgetData = WidgetData.createFromConfigFileData(configFileData);
-//        previewWidgetView.init(widgetData);
+    @Override
+    public void onBackPressed() {
+        if (currentViewStatus.equals(VIEW_EDIT)) {
+            //editorView.onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -112,13 +108,15 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
                 ConfigFileData configFileData = configDataBase.loadConfigFileDataByWidgetId(appWidgetId);
                 if (configFileData != null) {
                     configDataBase.setLastConfigFileData(configFileData);
-                    //showEditorView(WidgetData.createFromConfigFileData(configFileData), "addObjectMessageEdit");
+                    showEditorView(WidgetData.createFromConfigFileData(configFileData), "addObjectMessageEdit");
                     return;
                 }
                 showMainView();
+                return;
             }
         }
         if (editorView != null) {
+            editorView.removeAllViews();
             editorView = null;
         }
         if (mainMenuView != null) {
@@ -134,14 +132,14 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
 
     private void fragmentReplace(String reqNewFragmentView) {
         Fragment newFragment = null;
-        //currentViewStatus = reqNewFragmentView;
-        if (reqNewFragmentView.equals("main_list")) {
+        currentViewStatus = reqNewFragmentView;
+        if (reqNewFragmentView.equals(VIEW_LIST)) {
             if (mainMenuView != null) {
                 setCurrentView(mainMenuView);
                 return;
             }
             newFragment = new ListFragment();
-        } else if (reqNewFragmentView.equals("main_edit")) {
+        } else if (reqNewFragmentView.equals(VIEW_EDIT)) {
             if (editorView != null) {
                 setCurrentView(editorView);
                 //editorView.onUpdateBgColor();
@@ -161,13 +159,36 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
             if (editorView != null) {
                 editorView.setVisibility(View.GONE);
             }
+        } else if (view instanceof EditorView) {
+            view.setVisibility(View.VISIBLE);
+            editorView = (EditorView) view;
+            if (mainMenuView != null) {
+                mainMenuView.setVisibility(View.GONE);
+            }
+            if (editWidgetData != null) {
+
+            } else {
+
+            }
         }
+    }
+
+    public void showEditorView(WidgetData widgetData, String message) {
+        this.editWidgetData = widgetData;
+        fragmentReplace(VIEW_EDIT);
+    }
+
+    public void showMainMenuView() {
+        fragmentReplace(VIEW_LIST);
     }
 
     public MainMenuView getMainMenuView() {
         return mainMenuView;
     }
 
+    public EditorView getEditorView() {
+        return editorView;
+    }
 
     public void requestUpdateWidgetByName(String name) {
         List<Integer> widgetIdList = configDataBase.loadWidgetIDListByName(name);
@@ -182,6 +203,19 @@ public class DiyWidgetConfigActivity extends AppCompatActivity {
         int[] appWidgetIds = {appWidgetId};
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         sendBroadcast(intent);
+    }
+
+    public void addWidget(String widgetName) {
+        configDataBase.saveWidget(appWidgetId, widgetName);
+        requestUpdateWidgetId(appWidgetId);
+        Intent resultValue = new Intent();
+        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        setResult(Activity.RESULT_OK, resultValue);
+        finish();
+    }
+
+    public boolean hasWidgetId() {
+        return appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID;
     }
 
 }
